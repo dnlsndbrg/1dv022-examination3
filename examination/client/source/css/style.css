@@ -1,0 +1,15 @@
+#pwd {
+  background-color: red;
+  width: 800px;
+  height: 800px;
+}
+
+.window {
+  position: absolute;
+  left: 200px;
+  background-color: #4f4958;
+}
+
+.dragging {
+  background-color: green;
+}
