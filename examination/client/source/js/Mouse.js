@@ -1,22 +1,18 @@
 function Mouse(){
   this.draggedObject = null;
+  this.dragOffsetX = 0;
+  this.dragOffsetY = 0;
 
   this.mouseup = function() {
+    this.draggedObject.element.classList.remove("dragging");
     this.draggedObject = null;
   };
 
   this.mousemove = function(e) {
-
-    //console.log(this.draggedObject)
     if (this.draggedObject !== null) {
-
-      console.log("DRAG",this.draggedObject)
-
-      //this.draggedObject.classList.addClass("dragging");
-      this.draggedObject.element.style.left = e.offsetX;
-      this.draggedObject.element.style.top = e.offsetY;
+      this.draggedObject.drag(e);
     }
-  }
+  };
 
   document.addEventListener("mouseup", this.mouseup.bind(this));
   document.addEventListener("mousemove", this.mousemove.bind(this));

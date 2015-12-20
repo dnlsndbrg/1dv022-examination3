@@ -1,15 +1,48 @@
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: url(../image/wallpaper-desert.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 #pwd {
-  background-color: red;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 800px;
   height: 800px;
 }
 
 .window {
+  z-index: 1;
   position: absolute;
-  left: 200px;
-  background-color: #4f4958;
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
+}
+
+.window-bar {
+  padding: 14px;
+  color: #1a1a1a;
+  background-color: rgb(191, 191, 191);
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.window-content {
+  background-color: #f6f6f6;
+  min-height: 40px;
 }
 
 .dragging {
-  background-color: green;
+  -webkit-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
+  -moz-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
+  box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
 }
