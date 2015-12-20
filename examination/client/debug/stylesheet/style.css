@@ -18,6 +18,7 @@ body {
 .window {
   z-index: 1;
   position: absolute;
+  background-color: #f6f6f6;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
   -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
   box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
@@ -36,6 +37,31 @@ body {
   user-select: none;
 }
 
+.window-bar-title {
+  margin-right: 40px;
+  float: left;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.window-bar-controls {
+  float: right;
+}
+.window-bar a {
+
+}
+
+.minimize-window {
+
+}
+
+.close-window {
+  color: #C75858;
+}
+
+.close-window:hover {
+  color: #d;
+}
+
 .window-content {
   background-color: #f6f6f6;
   min-height: 40px;
@@ -45,4 +71,8 @@ body {
   -webkit-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
   -moz-box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
   box-shadow: 2px 2px 8px 0px rgba(0,0,0,0.39);
+}
+
+.clear {
+  clear: both;
 }

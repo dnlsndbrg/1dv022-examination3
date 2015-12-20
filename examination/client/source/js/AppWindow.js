@@ -11,13 +11,15 @@ AppWindow.prototype.init = function(config) {
   document.querySelector("#pwd").appendChild(clone);
   this.element = document.querySelector("#pwd").lastElementChild;
   this.element.setAttribute("id", "window-" + this.id);
-  document.querySelector("#window-" + this.id + " .window-bar").textContent = config.title;
+  document.querySelector("#window-" + this.id + " .window-bar-title").textContent = config.title;
   this.element.style.left = config.x + "px";
   this.element.style.top = config.y + "px";
   this.element.style.zIndex = config.zIndex;
+  this.element.style.width = config.width + "px";
+  this.element.style.height = config.height + "px";
 
   // drag
-  this.element.addEventListener("mousedown", this.startDrag.bind(this));
+  document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
 }
 
 AppWindow.prototype.startDrag = function(event) {

@@ -4,8 +4,10 @@ function Mouse(){
   this.dragOffsetY = 0;
 
   this.mouseup = function() {
-    this.draggedObject.element.classList.remove("dragging");
-    this.draggedObject = null;
+    if (this.draggedObject !== null) {
+      this.draggedObject.element.classList.remove("dragging");
+      this.draggedObject = null;
+    }
   };
 
   this.mousemove = function(e) {
