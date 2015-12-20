@@ -1,8 +1,18 @@
+var ResizeWindowWidth = require("./ResizeWindowWidth");
+var ResizeWindowHeight = require("./ResizeWindowHeight");
+
 function AppWindow(pwd, config) {
   this.pwd = pwd;
   this.element;
   this.id = config.id;
+  this.width = config.width;
+  this.height = config.height;
+  this.x = config.x;
   this.init(config);
+  this.resizeWindowWidth = new ResizeWindowWidth(this);
+  this.resizeWindowHeight = new ResizeWindowHeight(this);
+
+  document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
 }
 
 AppWindow.prototype.init = function(config) {
@@ -16,10 +26,10 @@ AppWindow.prototype.init = function(config) {
   this.element.style.top = config.y + "px";
   this.element.style.zIndex = config.zIndex;
   this.element.style.width = config.width + "px";
-  this.element.style.height = config.height + "px";
+  document.querySelector("#window-" + this.id + " .window-content-wrapper").style.height = config.height  + "px";
 
   // drag
-  document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
+
 }
 
 AppWindow.prototype.startDrag = function(event) {
@@ -29,23 +39,17 @@ AppWindow.prototype.startDrag = function(event) {
   this.element.classList.add("dragging");
   this.pwd.zIndex += 1;
   this.element.style.zIndex = this.pwd.zIndex;
-  //this.pwd.mouse.dragOffset.x = event.pageX -
-  // this.pwd.mouse.selectedWindow = this;
-  // window.addEventListener("mousemove", this.pwd.mouse.move.bind(this.pwd.mouse));
-  // window.addEventListener("mouseup", this.stopDrag.bind(this));
-  //this.dragged = true;
-  //console.log(this.dragged)
-  //this.element.classList.toggle("dragging");
-  //this.pwd.mouse.selected = this;
 }
 
 AppWindow.prototype.drag = function(e) {
-  this.element.style.left = e.pageX + this.pwd.mouse.dragOffsetX + "px";
-  this.element.style.top = e.pageY + this.pwd.mouse.dragOffsetY + "px";
+  this.x = e.pageX + this.pwd.mouse.dragOffsetX;
+  this.y = e.pageY + this.pwd.mouse.dragOffsetY;
+  this.element.style.left =  this.x + "px";
+  this.element.style.top = this.y + "px";
 }
 
 AppWindow.prototype.stopDrag = function() {
-  //window.removeEventListener("mousemove");
+  this.element.classList.remove("dragging");
 }
 
 module.exports = AppWindow;

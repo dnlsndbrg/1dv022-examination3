@@ -5,7 +5,7 @@ function Mouse(){
 
   this.mouseup = function() {
     if (this.draggedObject !== null) {
-      this.draggedObject.element.classList.remove("dragging");
+      this.draggedObject.stopDrag();
       this.draggedObject = null;
     }
   };

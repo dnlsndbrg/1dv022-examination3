@@ -16,9 +16,9 @@ body {
 }
 
 .window {
+  overflow: hidden;
   z-index: 1;
   position: absolute;
-  background-color: #f6f6f6;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
   -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
   box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.16);
@@ -46,25 +46,39 @@ body {
 .window-bar-controls {
   float: right;
 }
-.window-bar a {
-
-}
-
-.minimize-window {
-
-}
 
 .close-window {
   color: #C75858;
 }
 
 .close-window:hover {
-  color: #d;
+  color: #c64242;
 }
 
 .window-content {
-  background-color: #f6f6f6;
-  min-height: 40px;
+  overflow: hidden;
+  height: 100%;
+  background-color: #FFF;
+  float: left;
+}
+
+.window-resizer-x {
+  float: right;
+  background-color: green;
+  width: 10px;
+  height: 100%;
+}
+
+.window-resizer-y {
+  background-color: yellow;
+  height: 10px;
+}
+
+.window-resizer-xy {
+  float: right;
+  background-color: pink;
+  width: 10px;
+  height: 10px;
 }
 
 .dragging {
