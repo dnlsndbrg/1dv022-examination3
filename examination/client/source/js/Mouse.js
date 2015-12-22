@@ -3,9 +3,9 @@ function Mouse(){
   this.dragOffsetX = 0;
   this.dragOffsetY = 0;
 
-  this.mouseup = function() {
+  this.mouseup = function(e) {
     if (this.draggedObject !== null) {
-      this.draggedObject.stopDrag();
+      this.draggedObject.stopDrag(e);
       this.draggedObject = null;
     }
   };

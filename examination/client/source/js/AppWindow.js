@@ -1,5 +1,6 @@
 var ResizeWindowWidth = require("./ResizeWindowWidth");
 var ResizeWindowHeight = require("./ResizeWindowHeight");
+var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
 function AppWindow(pwd, config) {
   this.pwd = pwd;
@@ -8,10 +9,17 @@ function AppWindow(pwd, config) {
   this.width = config.width;
   this.height = config.height;
   this.x = config.x;
+  this.y = config.y;
   this.init(config);
+  this.titleBarHeight = document.querySelector("#window-" + this.id + " .window-bar").scrollHeight; // used for drag rezising
   this.resizeWindowWidth = new ResizeWindowWidth(this);
   this.resizeWindowHeight = new ResizeWindowHeight(this);
+  this.resizeWindowWidthHeight = new ResizeWindowWidthHeight(this);
 
+  // put on top if clicked
+  this.element.addEventListener("mousedown", this.moveToTop.bind(this), true);
+
+  // drag the window from the window bar
   document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
 }
 
@@ -27,9 +35,6 @@ AppWindow.prototype.init = function(config) {
   this.element.style.zIndex = config.zIndex;
   this.element.style.width = config.width + "px";
   document.querySelector("#window-" + this.id + " .window-content-wrapper").style.height = config.height  + "px";
-
-  // drag
-
 }
 
 AppWindow.prototype.startDrag = function(event) {
@@ -37,8 +42,6 @@ AppWindow.prototype.startDrag = function(event) {
   this.pwd.mouse.dragOffsetX = this.element.offsetLeft - event.pageX;
   this.pwd.mouse.dragOffsetY = this.element.offsetTop - event.pageY;
   this.element.classList.add("dragging");
-  this.pwd.zIndex += 1;
-  this.element.style.zIndex = this.pwd.zIndex;
 }
 
 AppWindow.prototype.drag = function(e) {
@@ -50,6 +53,11 @@ AppWindow.prototype.drag = function(e) {
 
 AppWindow.prototype.stopDrag = function() {
   this.element.classList.remove("dragging");
+}
+
+AppWindow.prototype.moveToTop = function() {
+  this.pwd.zIndex += 1;
+  this.element.style.zIndex = this.pwd.zIndex;
 }
 
 module.exports = AppWindow;

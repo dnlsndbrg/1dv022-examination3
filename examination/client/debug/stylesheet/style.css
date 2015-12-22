@@ -1,4 +1,11 @@
-
+html {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -29,12 +36,7 @@ body {
   color: #1a1a1a;
   background-color: rgb(191, 191, 191);
   cursor: default;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  white-space: nowrap;
 }
 
 .window-bar-title {
@@ -59,26 +61,31 @@ body {
   overflow: hidden;
   height: 100%;
   background-color: #FFF;
-  float: left;
 }
 
 .window-resizer-x {
-  float: right;
-  background-color: green;
-  width: 10px;
+  cursor: ew-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 5px;
   height: 100%;
 }
 
 .window-resizer-y {
-  background-color: yellow;
-  height: 10px;
+  cursor: ns-resize;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
 }
 
 .window-resizer-xy {
+  cursor: nwse-resize;
   float: right;
-  background-color: pink;
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 .dragging {

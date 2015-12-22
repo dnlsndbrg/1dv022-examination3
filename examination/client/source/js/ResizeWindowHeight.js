@@ -8,14 +8,12 @@ function ResizeWindowHeight(appWindow) {
 
 ResizeWindowHeight.prototype.startDrag = function() {
   this.appWindow.pwd.mouse.draggedObject = this;
+  this.appWindow.pwd.mouse.dragOffsetY = this.element.offsetTop + this.appWindow.element.offsetTop + this.appWindow.titleBarHeight - event.pageY;
   // TODO: fix drag offset
-  //this.appWindow.pwd.mouse.dragOffsetX = this.element.offsetLeft - event.pageX;
-  //this.appWindow.pwd.mouse.dragOffsetY = this.element.offsetTop - event.pageY;
-  //this.appWindow.pwd.mouse.startDragX = event.pageX;
 }
 
 ResizeWindowHeight.prototype.drag = function(e) {
-  this.resizeThis.style.height = (e.pageY - this.appWindow.y) + "px";
+  this.resizeThis.style.height = (e.pageY - this.appWindow.y - this.appWindow.pwd.mouse.dragOffsetY) + "px";
   //this.appWindow.element.style.left = e.pageX + this.pwd.mouse.dragOffsetX + "px";
   //this.element.style.left = e.pageX + this.pwd.mouse.dragOffsetX + "px";
   //this.element.style.top = e.pageY + this.pwd.mouse.dragOffsetY + "px";
