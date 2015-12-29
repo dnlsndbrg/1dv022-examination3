@@ -2,8 +2,8 @@ var ResizeWindowWidth = require("./ResizeWindowWidth");
 var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
-function AppWindow(pwd, config) {
-  this.pwd = pwd;
+function AppWindow(config) {
+  this.pwd = config.pwd;
   this.element;
   this.id = config.id;
   this.width = config.width;
@@ -16,11 +16,14 @@ function AppWindow(pwd, config) {
   this.resizeWindowHeight = new ResizeWindowHeight(this);
   this.resizeWindowWidthHeight = new ResizeWindowWidthHeight(this);
 
+  this.content = document.querySelector("#window-" + this.id + " .window-content");
+
   // put on top if clicked
   this.element.addEventListener("mousedown", this.moveToTop.bind(this), true);
-
   // drag the window from the window bar
   document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
+  // close
+  document.querySelector("#window-" + this.id + " .close-window").addEventListener("click", this.close.bind(this));
 }
 
 AppWindow.prototype.init = function(config) {
@@ -56,8 +59,12 @@ AppWindow.prototype.stopDrag = function() {
 }
 
 AppWindow.prototype.moveToTop = function() {
-  this.pwd.zIndex += 1;
-  this.element.style.zIndex = this.pwd.zIndex;
+  this.pwd.lastZIndex += 1;
+  this.element.style.zIndex = this.pwd.lastZIndex;
+}
+
+AppWindow.prototype.close = function(event) {
+  this.pwd.closeApp(this);
 }
 
 module.exports = AppWindow;

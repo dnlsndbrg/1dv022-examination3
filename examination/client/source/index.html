@@ -10,6 +10,11 @@
 <body>
   <div id="pwd"></div>
 
+  <template id="shortcut">
+    <div class="shortcut">
+    </div>
+  </template>
+
   <template id="appWindow">
     <div class="window">
       <div class="window-bar">
@@ -20,7 +25,7 @@
         <div class="clear"></div>
       </div>
       <div class="window-content-wrapper">
-        <div class="window-content">aaasdasdasdasdasdasdasdasssssssssssssssssssssss</div>
+        <div class="window-content"></div>
         <div class="window-resizer-x"></div>
         <div class="clear"></div>
       </div>
@@ -28,6 +33,21 @@
         <div class="window-resizer-xy"></div>
         <div class="clear"></div>
       </div>
+    </div>
+  </template>
+
+  <template id="chat">
+    <div class="chat">
+      <div class="chat-channels">channels</div>
+      <div class="chat-messages">
+        <template>
+          <div class="chat-message">
+            <p class="chat-text"></p>
+            <p class="chat-author"></p>
+          </div>
+        </template>
+      </div>
+      <textarea class="chat-message-area"></textarea>
     </div>
   </template>
   <script src="javascript/build.js"></script>

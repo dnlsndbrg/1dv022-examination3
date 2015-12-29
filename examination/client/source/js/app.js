@@ -1,28 +1,51 @@
-var desktop = require("./desktop");
 var AppWindow = require("./AppWindow");
 var Mouse = require("./Mouse");
+var Shortcut = require("./Shortcut");
+var appList = require("./appList");
 
-var pwd = {
-  mouse: new Mouse(),
-  apps: [],
-  zIndex: 3
+var Pwd = function(){
+  this.mouse = new Mouse();
+  this.installedApps = [];
+  this.startedApps = {};
+  this.lastZIndex = 1;
+  this.lastID = 1;
+  this.newX = 10;
+  this.newY = 10;
+
+  // creates shortcuts for all available apps
+  this.installApps = function() {
+    for (var app in appList) {
+      this.installedApps.push(new Shortcut(appList[app], this))
+    };
+  }
+
+  // start an app
+  this.startApp = function(app) {
+    var newApp = new app({
+      pwd: this,
+      id: this.lastID,
+      x: this.newX,
+      y: this.newY,
+      zIndex: this.lastZIndex,
+    });
+    this.startedApps[this.lastID] = newApp;
+    this.lastZIndex += 1;
+    this.lastID += 1;
+    this.newX += 10;
+    this.newY += 10;
+  }
+
+  this.closeApp = function(app) {
+    console.log(app, this.startedApps)
+    this.startedApps[app.id].close();
+    delete this.startedApps[app.id];
+  }
+
+  this.resize = function(event) {
+    console.log("resize", event);
+  }
 }
 
-pwd.apps.push(new AppWindow(pwd, {
-  id: 1,
-  title: "test window",
-  x: 20,
-  y: 100,
-  zIndex: 1,
-  width: 300,
-  height: 300
-}));
-pwd.apps.push(new AppWindow(pwd, {
-  id: 2,
-  title: "another window",
-  x: 100,
-  y: 300,
-  zIndex: 2,
-  width: 250,
-  height: 400
-}));
+var pwd = new Pwd();
+pwd.installApps();
+window.addEventListener("resize", pwd.resize);
