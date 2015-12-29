@@ -41,11 +41,16 @@ var Pwd = function(){
     delete this.startedApps[app.id];
   }
 
-  this.resize = function(event) {
-    console.log("resize", event);
+  this.resize = function() {
+    console.log(this, "resize", window.innerWidth, window.innerHeight);
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+
   }
 }
 
 var pwd = new Pwd();
-pwd.installApps();
-window.addEventListener("resize", pwd.resize);
+pwd.installApps(); // create shortcuts for all available apps
+pwd.resize(); // run resize once to set width and height
+window.addEventListener("resize", pwd.resize.bind(pwd));

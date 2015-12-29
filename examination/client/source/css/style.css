@@ -15,6 +15,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
   margin: 0;
+  overflow: hidden;
 }
 
 #pwd {
@@ -52,12 +53,36 @@ body {
   float: right;
 }
 
+.window-bar-controls a {
+  color: #4D4D4D;
+}
+
 .close-window {
-  color: #C75858;
+  color: #551A8B;
 }
 
 .close-window:hover {
-  color: #c64242;
+  color: #F75C5C;
+}
+
+.minimize-window {
+  position: relative;
+  font-size: 0.8em;
+  top: 3px;
+}
+
+.minimize-window:hover {
+  color: #E3BD40;
+}
+
+.maximize-window {
+  position: relative;
+  top: -1px;
+  font-size: 0.8em;
+}
+
+.maximize-window:hover {
+  color: #3B9C43;
 }
 
 .window-content {
@@ -101,6 +126,10 @@ body {
   width: 40px;
   height: 40px;
   background-color: red;
+}
+
+.hidden {
+  display: none;
 }
 
 .clear {
