@@ -84,17 +84,30 @@ AppWindow.prototype.close = function(event) {
 }
 
 AppWindow.prototype.maximize = function() {
+  // save the size and position so we can return to it with the restore function
+  this.lastX = this.x;
+  this.lastY = this.y;
+  this.lastWidth = this.width;
+  this.lastHeight = this.height;
+
+  // make the window fullscreen
   this.element.style.left = "0px";
   this.element.style.top = "0px";
   this.element.style.width = this.pwd.width + "px";
   this.wrapperElement.style.height = this.pwd.height + "px";
-  console.log(document.querySelector("#window-" + this.id + " .maximize-window"))
+
   document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
   document.querySelector("#window-" + this.id + " .restore-window").classList.remove("hidden");
 }
 
 AppWindow.prototype.restore = function() {
-  console.log("asdasdsadsds")
+  this.element.style.left = this.lastX + "px";
+  this.element.style.top = this.lastY + "px";
+  this.element.style.width = this.lastWidth + "px";
+  this.wrapperElement.style.height = this.lastHeight + "px";
+
+  document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
+  document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
 }
 
 module.exports = AppWindow;

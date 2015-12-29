@@ -82,7 +82,18 @@ body {
 }
 
 .maximize-window:hover {
-  color: #3B9C43;
+  color: #0A75CC;
+}
+
+
+.restore-window {
+  position: relative;
+  top: -1px;
+  font-size: 0.8em;
+}
+
+.restore-window:hover {
+  color: #0A75CC;
 }
 
 .window-content {
