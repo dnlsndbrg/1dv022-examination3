@@ -1,8 +1,9 @@
 module.exports = {
   "Chat": {
     entry: require("./apps/chat/app"),
-    title: "Chat2",
+    title: "Chat",
     width: 400,
-    height: 300
+    height: 300,
+    icon: "fa-quote-right"
   }
 }

@@ -11,6 +11,7 @@ var Pwd = function(){
   this.lastID = 1;
   this.newX = 10;
   this.newY = 10;
+  this.fullscreenedWindow = null;
 
   // creates shortcuts for all available apps
   this.installApps = function() {
@@ -20,8 +21,10 @@ var Pwd = function(){
   }
 
   // start an app
-  this.startApp = function(app) {
-    var newApp = new app({
+  this.startApp = function(config) {
+    var newApp = new config.entry({
+      title: config.title,
+      icon: config.icon,
       pwd: this,
       id: this.lastID,
       x: this.newX,
@@ -47,6 +50,8 @@ var Pwd = function(){
     this.width = window.innerWidth;
     this.height = window.innerHeight;
 
+    if (this.fullscreenedWindow)
+      this.fullscreenedWindow.maximize();
   }
 }
 

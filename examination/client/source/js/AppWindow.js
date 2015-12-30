@@ -3,6 +3,7 @@ var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
 function AppWindow(config) {
+  console.log("CONFIG", config)
   this.id = config.id;
   this.pwd = config.pwd;
   this.element;
@@ -33,15 +34,29 @@ AppWindow.prototype.init = function(config) {
   // create html
   var clone = document.importNode(document.querySelector("#appWindow").content, true);
   document.querySelector("#pwd").appendChild(clone);
+
+  // define this.element
   this.element = document.querySelector("#pwd").lastElementChild;
+
+  // set id
   this.element.setAttribute("id", "window-" + this.id);
+
+  // define this.wrapperElement
+  this.wrapperElement = document.querySelector("#window-" + this.id + " .window-content-wrapper");
+
+  // set window bar icon
+  document.querySelector("#window-" + this.id + " .fa").classList.add(config.icon);
+
+  // set window bar title
   document.querySelector("#window-" + this.id + " .window-bar-title").textContent = config.title;
+
+  // set position and size
   this.element.style.left = config.x + "px";
   this.element.style.top = config.y + "px";
   this.element.style.zIndex = config.zIndex;
   this.element.style.width = config.width + "px";
-  document.querySelector("#window-" + this.id + " .window-content-wrapper").style.height = config.height  + "px";
-  this.wrapperElement = document.querySelector("#window-" + this.id + " .window-content-wrapper");
+  this.wrapperElement.style.height = config.height  + "px";
+
 }
 
 AppWindow.prototype.startDrag = function(event) {
@@ -84,11 +99,14 @@ AppWindow.prototype.close = function(event) {
 }
 
 AppWindow.prototype.maximize = function() {
-  // save the size and position so we can return to it with the restore function
+  // save the size and position so we can return to it with the restore window function
   this.lastX = this.x;
   this.lastY = this.y;
   this.lastWidth = this.width;
   this.lastHeight = this.height;
+
+  // tell pwd this window is in fullscreen (in case of browser resizing)
+  this.pwd.fullscreenedWindow = this;
 
   // make the window fullscreen
   this.element.style.left = "0px";
@@ -96,6 +114,7 @@ AppWindow.prototype.maximize = function() {
   this.element.style.width = this.pwd.width + "px";
   this.wrapperElement.style.height = this.pwd.height + "px";
 
+  // hide/show the maximize and restore windowbar buttons
   document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
   document.querySelector("#window-" + this.id + " .restore-window").classList.remove("hidden");
 }
@@ -105,6 +124,9 @@ AppWindow.prototype.restore = function() {
   this.element.style.top = this.lastY + "px";
   this.element.style.width = this.lastWidth + "px";
   this.wrapperElement.style.height = this.lastHeight + "px";
+
+  //tell pwd this window is no longer in fullscreen (in case of browser resizing)
+  this.pwd.fullscreenedWindow = null;
 
   document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
   document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
