@@ -2,9 +2,11 @@ var AppWindow = require("./AppWindow");
 var Mouse = require("./Mouse");
 var Shortcut = require("./Shortcut");
 var appList = require("./appList");
+var Taskbar = require("./Taskbar");
 
 var Pwd = function(){
   this.mouse = new Mouse();
+  this.taskbar = new Taskbar.Taskbar();
   this.installedApps = [];
   this.startedApps = {};
   this.lastZIndex = 1;
@@ -24,6 +26,8 @@ var Pwd = function(){
   this.startApp = function(config) {
     var newApp = new config.entry({
       title: config.title,
+      width: config.width,
+      height: config.height,
       icon: config.icon,
       pwd: this,
       id: this.lastID,

@@ -1,15 +1,22 @@
 var AppWindow = require("../../../js/AppWindow");
+var Taskbar = require("../../../js/Taskbar");
 var config = require("./config.json");
 
 function Chat(config) {
-  this.title = "Chat";
-  this.width = 400;
-  this.height = 300;
+  this.title = config.title;
+  this.width = config.width;
+  this.height = config.height;
   this.id = config.id;
   config.width = this.width;
   config.height = this.height;
   config.title = this.title;
   this.appWindow = new AppWindow(config);
+
+  // add to taskbar
+  this.taskbarApp = new Taskbar.TaskbarApp(config);
+
+
+  // chat stuff
   this.socket = null;
   var template = document.querySelector("#chat");
   this.chatDiv = document.importNode(template.content.firstElementChild, true);
@@ -74,7 +81,6 @@ Chat.prototype.sendMessage = function(text) {
     key: config.key
   }
 
-  console.log(this);
   this.connect().then(function(socket){
     socket.send(JSON.stringify(data));
   }).catch(function(error) {
@@ -96,6 +102,9 @@ Chat.prototype.printMessage = function(message) {
 Chat.prototype.close = function() {
   // remove the graphics
   document.querySelector("#pwd").removeChild(this.appWindow.element);
+
+  // remove from taskbar
+  document.querySelector("#pwd .taskbar").removeChild(this.taskbarElement);
 
 }
 
