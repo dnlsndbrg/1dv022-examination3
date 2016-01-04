@@ -1,20 +1,21 @@
-var AppWindow = require("../../../js/AppWindow");
-var Taskbar = require("../../../js/Taskbar");
+var PwdApp = require("../../../js/PwdApp");
+//var AppWindow = require("../../../js/AppWindow");
+//var Taskbar = require("../../../js/Taskbar");
 var config = require("./config.json");
 
 function Chat(config) {
-  this.title = config.title;
-  this.width = config.width;
-  this.height = config.height;
-  this.id = config.id;
-  config.width = this.width;
-  config.height = this.height;
-  config.title = this.title;
-  this.appWindow = new AppWindow(config);
-
-  // add to taskbar
-  this.taskbarApp = new Taskbar.TaskbarApp(config);
-
+  PwdApp.call(this, config);
+  // this.title = config.title;
+  // this.width = config.width;
+  // this.height = config.height;
+  // this.id = config.id;
+  // config.width = this.width;
+  // config.height = this.height;
+  // config.title = this.title;
+  // this.appWindow = new AppWindow(config);
+  //
+  // // add to taskbar
+  // this.taskbarApp = new Taskbar.TaskbarApp(config, this);
 
   // chat stuff
   this.socket = null;
@@ -23,6 +24,7 @@ function Chat(config) {
   this.connect().then(function(socket) {
 
   });
+
 
   this.chatDiv.addEventListener("keypress", function(event) {
     // listen for enter key
@@ -38,9 +40,11 @@ function Chat(config) {
 
 
   this.appWindow.content.appendChild(this.chatDiv);
-
-
 }
+
+Chat.prototype = Object.create(PwdApp.prototype);
+Chat.prototype.constructor = Chat;
+
 
 Chat.prototype.connect = function() {
   return new Promise(function(resolve, reject){
@@ -104,7 +108,7 @@ Chat.prototype.close = function() {
   document.querySelector("#pwd").removeChild(this.appWindow.element);
 
   // remove from taskbar
-  document.querySelector("#pwd .taskbar").removeChild(this.taskbarElement);
+  document.querySelector("#pwd .taskbar").removeChild(this.taskbarApp.element);
 
 }
 

@@ -6,7 +6,8 @@ function Taskbar() {
   this.element = document.querySelector("#pwd").lastElementChild;
 }
 
-function TaskbarApp(config) {
+function TaskbarApp(config, app) {
+  this.app = app;
 
   //create html
   var template = document.querySelector("#taskbarApp");
@@ -19,8 +20,8 @@ function TaskbarApp(config) {
   this.element.children[1].textContent = config.title;
 
   this.element.addEventListener("click", function(e) {
-    console.log("CLICK");
-  })
+    this.appWindow.moveToTop();
+  }.bind(this.app));
 
   this.click = function(e) {
 
