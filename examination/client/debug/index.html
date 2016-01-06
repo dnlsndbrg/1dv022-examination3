@@ -57,7 +57,7 @@
 
 
 
-    <template id="chat-name-input">
+    <!-- <template id="chat-name-input">
         <div class="chat-name-input">
             Enter name: 
             <input type="text" placeholder="Name" />
@@ -65,8 +65,9 @@
             <input type="button" class="btn" Value="Go" />
         </div>
     </template>
+    -->
 
-    <template id="chat-messages">
+    <!--<template id="chat-messages">
         <div class="chat-messages">
             <template>
                 <div class="chat-message">
@@ -76,17 +77,36 @@
             </template>
         </div>
     </template>
+    -->
+
+    <template id="chat-channel-list-entry">
+        <div class="chat-channel-list-entry chat-active-channel">
+            <i class="fa fa-times chat-close-channel"></i>
+            <span></span>
+        </div>
+    </template>
 
     <template id="chat">
-        <div class="chat">
-            <div class="chat-channel-list">
-                <template id="chat-channel-list-entry">
-                    <div class="chat-channel-list-entry"></div>
-                </template>
+        <div class="chat-channel-list-wrapper">
+            <div class="chat-channel-list"><input type="button" value="+" /></div>
+            <div class="chat-join-channel hidden">
+                <input type="text" placeholder="Join channel" />
             </div>
-            <input type="button" value="+" />
-            <div class="chat-messages-area"></div>
-            <textarea class="chat-message-input"></textarea>
+        </div>
+        <div class="chat-channels"></div>
+    </template>
+
+    <template id="chat-channel">
+        <div class="chat-channel">
+            <div class="chat-messages">
+            <template>
+                <div class="chat-message">
+                    <p class="chat-author"></p>
+                    <p class="chat-text"></p>
+                </div>
+            </template>
+            </div>
+            <textarea class="chat-message-area"></textarea>
         </div>
     </template>
 

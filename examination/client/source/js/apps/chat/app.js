@@ -3,40 +3,121 @@ var socketConfig = require("./socketConfig.json");
 var Channel = require("./Channel");
 
 function Chat(config) {
-    PwdApp.call(this, config);
-    this.channels = [];
-    this.inputName();
+    PwdApp.call(this, config); //inherit from pwdApp object
+    this.channels = {};
+    this.activeChannel = null;
 
+    //this.inputName();
 
-    /*
-    // chat stuff
-    this.socket = null;
     var template = document.querySelector("#chat");
-    this.chatDiv = document.importNode(template.content.firstElementChild, true);
-    this.connect().then(function(socket) {
+    this.element = document.importNode(template.content, true);
+    this.appWindow.content.appendChild(this.element);
+    this.chatChannelElement = document.querySelector("#window-" + this.id + " .chat-channels");
+    this.channelListElement = document.querySelector("#window-" + this.id + " .chat-channel-list");
 
-    });
-
-    this.chatDiv.addEventListener("keypress", function(event) {
-        // listen for enter key
-        if (event.keyCode === 13) {
-            //send a message
-            this.sendMessage(event.target.value);
-
-            // empty textarea
-            event.target.value = "";
-
-            event.preventDefault();
-        }
+    // hook up add channel button
+    this.addChannelButton = document.querySelector("#window-" + this.id + " input[type=button");
+    this.addChannelButton.addEventListener("click", function() {
+        this.activeChannel.hide();
+        this.activeChannel = new Channel(this, "test");
     }.bind(this));
 
-    this.appWindow.content.appendChild(this.chatDiv);
-    */
+    // this.channelListElement.firstElementChild.addEventListener("click", function() {
+    //     console.log("asdasdasdas")
+    // })
+
+    this.socket = null;
+
+    this.connect().then(function(socket) {
+        this.activeChannel = new Channel(this, "");
+    }.bind(this));
+
+    
+
+
+
+
+    
+    // chat stuff
+    // this.socket = null;
+    // var template = document.querySelector("#chat");
+    // this.chatDiv = document.importNode(template.content.firstElementChild, true);
+    // this.connect().then(function(socket) {
+    //     console.log(socket);
+    // });
+
+    // this.chatDiv.addEventListener("keypress", function(event) {
+    //     // listen for enter key
+    //     if (event.keyCode === 13) {
+    //         //send a message
+    //         this.sendMessage(event.target.value);
+
+    //         // empty textarea
+    //         event.target.value = "";
+
+    //         event.preventDefault();
+    //     }
+    // }.bind(this));
+
+    // this.appWindow.content.appendChild(this.chatDiv);
+    
 }
 
 Chat.prototype = Object.create(PwdApp.prototype);
 Chat.prototype.constructor = Chat;
 
+
+Chat.prototype.connect = function() {
+    return new Promise(function(resolve, reject){
+
+        if (this.socket && this.socket.readyState === 1) {
+            resolve(this.socket);
+            return;
+        }
+
+        this.socket = new WebSocket(socketConfig.address);
+
+        this.socket.addEventListener("open", function() {
+            resolve(this.socket);
+        }.bind(this));
+
+        this.socket.addEventListener("error", function(event) {
+            reject(new Error("Could not connect"));
+        }.bind(this));
+
+        this.socket.addEventListener("message", function(event) {
+            var message = JSON.parse(event.data);
+            if (message.type === "message") {
+                if (message.channel in this.channels) {
+                    this.channels[message.channel].printMessage(message);
+                }
+            }
+        }.bind(this));
+
+    }.bind(this));
+
+};
+
+Chat.prototype.sendMessage = function(channel, text) {
+    var data = {
+        type: "message",
+        data: text,
+        username: "Michael Scott",
+        channel: channel,
+        key: socketConfig.key
+    };
+
+    this.connect().then(function(socket) {
+        socket.send(JSON.stringify(data));
+    }).catch(function(error) {
+        console.log("Error: ", error);
+    });
+
+};
+
+
+
+/*
 Chat.prototype.inputName = function() {
     var template = document.querySelector("#chat-name-input");
     var clone = document.importNode(template.content, true);
@@ -51,29 +132,24 @@ Chat.prototype.inputName = function() {
 
 };
 
+*/
+
 Chat.prototype.start = function() {
+    /*
     var template = document.querySelector("#chat");
     this.element = document.importNode(template.content, true);
     this.appWindow.content.textContent = "";
     this.appWindow.content.appendChild(this.element);
     this.channelListElement = document.querySelector("#window-" + this.id + " .chat-channel-list"); // the div with the list of connected channels
+    */
 };
 
+/*
 Chat.prototype.joinChannel = function(name) {
-    var newChannel = new Channel(name);
-    this.channels.push(newChannel);
+    var newChannel = new Channel(this, name);
+    this.channels[name] = newChannel;
+
     this.showChannel(newChannel);
-
-    var template = document.querySelector("#chat-channel-list-entry");
-    var clone = document.importNode(template.content, true);
-
-    if (name === "") {
-        name = "Default"
-    };
-
-    //clone.textContent = name;
-    
-    this.channelListElement.appendChild(clone);
 
     //console.log(this.channelListElement.lastElementChild)
     // add click listener to be able to show the channel
@@ -81,11 +157,17 @@ Chat.prototype.joinChannel = function(name) {
     //    console.log("CLICAKSCAS");
     //});
 };
-
+*/
 Chat.prototype.showChannel = function(channel) {
-
+    /*if (this.activeChannel) {
+        this.activeChannel.listEntryElement.classList.remove("chat-active-channel");
+    }
+    channel.listEntryElement.classList.add("chat-active-channel");
+    this.activeChannel = channel;
+    */
 };
 
+/*
 Chat.prototype.connect = function() {
     return new Promise(function(resolve, reject){
 
@@ -120,7 +202,7 @@ Chat.prototype.sendMessage = function(text) {
         type: "message",
         data: text,
         username: "Daniel",
-        channel: "",
+        channel: "dstest",
         key: socketConfig.key
     };
 
@@ -141,6 +223,11 @@ Chat.prototype.printMessage = function(message) {
 
     this.chatDiv.querySelectorAll(".chat-messages")[0].appendChild(messageDiv);
 };
+*/
+
+Chat.prototype.closeChannel = function(channel) {
+    delete this.channels[channel.name];
+};
 
 Chat.prototype.close = function() {
     // remove the graphics
@@ -148,7 +235,6 @@ Chat.prototype.close = function() {
 
     // remove from taskbar
     document.querySelector("#pwd .taskbar").removeChild(this.taskbarApp.element);
-
 };
 
 module.exports = Chat;
