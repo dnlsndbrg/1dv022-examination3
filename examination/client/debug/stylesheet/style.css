@@ -26,10 +26,10 @@ body {
 }
 
 .taskbar {
-  background-color: rgba(255,255,255,0.1);
+  background-color: #243342;
   width: 100%;
   height: 40px;
-  box-shadow: 0 3px 3px 0px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 3px 0px rgba(0,0,0,0.4);
 }
 
 .task {
@@ -92,7 +92,7 @@ body {
 }
 
 .close-window:hover {
-  color: #F75C5C;
+  color: #FF7D7D;
 }
 
 .minimize-window, .minimize-window:visited {
@@ -108,7 +108,7 @@ body {
 }
 
 .maximize-window:hover {
-  color: #3FAD2B;
+  color: #5ABD48;
 }
 
 .restore-window, .restore-window:visited {
@@ -116,7 +116,7 @@ body {
 }
 
 .restore-window:hover {
-  color: #3FAD2B;
+  color: #5ABD48;
 }
 
 .window-content {

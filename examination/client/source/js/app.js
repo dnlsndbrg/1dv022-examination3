@@ -38,8 +38,8 @@ var Pwd = function(){
     this.startedApps[this.lastID] = newApp;
     this.lastZIndex += 1;
     this.lastID += 1;
-    this.newX += 10;
-    this.newY += 10;
+    this.newX += 20;
+    this.newY += 20;
   }
 
   this.closeApp = function(app) {
@@ -53,6 +53,9 @@ var Pwd = function(){
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;
+
+    this.newX = this.width / 2 - 250;
+    this.newY = this.height / 3 - 200;
 
     if (this.fullscreenedWindow)
       this.fullscreenedWindow.maximize();

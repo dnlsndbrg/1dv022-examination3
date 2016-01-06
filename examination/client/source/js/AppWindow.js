@@ -3,7 +3,7 @@ var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
 function AppWindow(config) {
-  console.log("CONFIG", config)
+  console.log("CONFIG", config);
   this.id = config.id;
   this.pwd = config.pwd;
   this.element;
