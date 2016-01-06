@@ -88,35 +88,27 @@ body {
 }
 
 .close-window, .close-window:visited {
-  color: #F75C5C;
+  color: #D26B30;
 }
 
 .close-window:hover {
-  color: #FF7D7D;
+  color: #D15006;
 }
 
 .minimize-window, .minimize-window:visited {
-  color: #B8A006;
+  color: #FDB833;
 }
 
 .minimize-window:hover {
-  color: #B8A006;
+  color: #FDA700;
 }
 
-.maximize-window, .maximize-window:visited {
-  color: #3FAD2B;
+.maximize-window, .maximize-window:visited, .restore-window, .restore-window:visited {
+  color: #7EB364;
 }
 
-.maximize-window:hover {
-  color: #5ABD48;
-}
-
-.restore-window, .restore-window:visited {
-  color: #3FAD2B;
-}
-
-.restore-window:hover {
-  color: #5ABD48;
+.maximize-window:hover, .restore-window:hover {
+  color: #66B340;
 }
 
 .window-content {
@@ -192,4 +184,25 @@ body {
 
 .clear {
   clear: both;
+}
+
+input[type="text"] {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    padding: 7px;
+    border-radius: 6px;
+    outline: none;
+    border: 1px solid #C8C8C8;
+}
+
+.btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    background-color: #243342;
+    border: none;
+    color: #E3E3E3;
+    padding: 7px;
+    border-radius: 6px;
+    outline: none;
+    min-width: 50px;
 }

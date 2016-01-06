@@ -42,25 +42,24 @@ var Pwd = function(){
     this.newY += 20;
   }
 
-  this.closeApp = function(app) {
-    console.log(app, this.startedApps)
-    this.startedApps[app.id].close();
-    delete this.startedApps[app.id];
-  }
+    this.closeApp = function(app) {
+        this.startedApps[app.id].close();
+        delete this.startedApps[app.id];
+    };
 
-  this.resize = function() {
-    console.log(this, "resize", window.innerWidth, window.innerHeight);
+    this.resize = function() {
 
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
 
-    this.newX = this.width / 2 - 250;
-    this.newY = this.height / 3 - 200;
+        this.newX = this.width / 2 - 250;
+        this.newY = this.height / 3 - 200;
 
-    if (this.fullscreenedWindow)
-      this.fullscreenedWindow.maximize();
-  }
-}
+        if (this.fullscreenedWindow) {
+            this.fullscreenedWindow.maximize();
+        }
+    };
+};
 
 var pwd = new Pwd();
 pwd.installApps(); // create shortcuts for all available apps

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PWD</title>
-  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="stylesheet/style.css">
+    <meta charset="UTF-8">
+    <title>PWD</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="stylesheet/style.css">
+    <link rel="stylesheet" href="stylesheet/chat.css">
 </head>
 <body>
   <div id="pwd"></div>
@@ -53,20 +54,42 @@
     </div>
   </template>
 
-  <template id="chat">
-    <div class="chat">
-      <div class="chat-channels">channels</div>
-      <div class="chat-messages">
-        <template>
-          <div class="chat-message">
-            <p class="chat-text"></p>
-            <p class="chat-author"></p>
-          </div>
-        </template>
-      </div>
-      <textarea class="chat-message-area"></textarea>
-    </div>
-  </template>
-  <script src="javascript/build.js"></script>
+
+
+
+    <template id="chat-name-input">
+        <div class="chat-name-input">
+            Enter name: 
+            <input type="text" placeholder="Name" />
+            <br />
+            <input type="button" class="btn" Value="Go" />
+        </div>
+    </template>
+
+    <template id="chat-messages">
+        <div class="chat-messages">
+            <template>
+                <div class="chat-message">
+                <p class="chat-text"></p>
+                <p class="chat-author"></p>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template id="chat">
+        <div class="chat">
+            <div class="chat-channel-list">
+                <template id="chat-channel-list-entry">
+                    <div class="chat-channel-list-entry"></div>
+                </template>
+            </div>
+            <input type="button" value="+" />
+            <div class="chat-messages-area"></div>
+            <textarea class="chat-message-input"></textarea>
+        </div>
+    </template>
+
+    <script src="javascript/build.js"></script>
 </body>
 </html>

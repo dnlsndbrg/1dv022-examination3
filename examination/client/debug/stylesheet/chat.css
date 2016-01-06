@@ -1,0 +1,27 @@
+.chat-name-input {
+	text-align: center;
+	padding: 20px;
+}
+
+.chat-channel-list {
+	display: inline-block;
+}
+
+.chat-active-channel {
+	background-color: red;
+}
+
+.chat-inactive-channel {
+	background-color: blue;
+}
+
+.chat-messages-area {
+	width: 100%;
+	height: 20px;
+	border-top: 1px solid #B1B1B1;
+	background-color: orange;
+}
+
+.chat-message-input {
+	width: 100%;
+}
