@@ -72,7 +72,6 @@ body {
   background-color: #243342;
   cursor: default;
   white-space: nowrap;
-  border-bottom: 1px solid #171717;
 }
 
 .window-bar-title {
@@ -112,10 +111,10 @@ body {
 }
 
 .restore-window, .restore-window:visited {
-    color: #FDB833;
+    color: #78CEF9;
 }
 .restore-window:hover {
-    color: #FDA700;
+    color: #66B8D4;
 }
 
 .window-content {

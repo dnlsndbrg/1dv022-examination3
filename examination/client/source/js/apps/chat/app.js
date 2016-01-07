@@ -26,13 +26,17 @@ function Chat(config) {
 
         // show the join new channel form and position it next to the mouse cursor
         this.joinChannelInput.classList.remove("hidden");
-        
+
         var btnboundingRect = this.joinChannelButton.getBoundingClientRect();
         var inputBoundingRect = this.joinChannelInput.getBoundingClientRect();
-        console.log(btnboundingRect, inputBoundingRect);
 
-        this.joinChannelInput.style.left = btnboundingRect.left - this.appWindow.x + btnboundingRect.width + 4 + "px";
-        this.joinChannelInput.style.top = btnboundingRect.top - this.appWindow.y - (inputBoundingRect.height / 2) + (btnboundingRect.height / 2) + "px";
+        var left = btnboundingRect.left - this.appWindow.x + btnboundingRect.width + 4 + "px";
+        var top = btnboundingRect.top - this.appWindow.y - (inputBoundingRect.height / 2) + (btnboundingRect.height / 2) + "px";
+
+        console.log(btnboundingRect.left,this.appWindow.x)
+
+        this.joinChannelInput.style.left = left;
+        this.joinChannelInput.style.top = top;
 
         this.joinChannelInput.value = "";
         this.joinChannelInput.focus();
@@ -51,7 +55,6 @@ function Chat(config) {
 
         // dont hide if the click is in the join channel div
         this.clickJoinCHannelForm = function(event) {
-            console.log("sssss");
             event.stopPropagation();
         }.bind(this);
 

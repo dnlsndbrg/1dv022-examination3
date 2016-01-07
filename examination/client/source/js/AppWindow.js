@@ -3,7 +3,6 @@ var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
 function AppWindow(config) {
-  console.log("CONFIG", config);
   this.id = config.id;
   this.pwd = config.pwd;
   this.element;
@@ -75,7 +74,6 @@ AppWindow.prototype.drag = function(e) {
 }
 
 AppWindow.prototype.checkBounds = function(e){
-  console.log(this.pwd.width, this.pwd.height);
   if (e.pageX > this.pwd.width)
     this.x = this.pwd.width + this.pwd.mouse.dragOffsetX;
   if (e.pageY > this.pwd.height)
@@ -112,7 +110,10 @@ AppWindow.prototype.maximize = function() {
   this.element.style.left = "0px";
   this.element.style.top = "0px";
   this.element.style.width = this.pwd.width + "px";
-  this.wrapperElement.style.height = this.pwd.height + "px";
+  var height = this.pwd.height - document.querySelector("#window-" + this.id + " .window-bar").getBoundingClientRect().height;
+  this.wrapperElement.style.height = height + "px";
+  this.x = 0;
+  this.y = 0;
 
   // hide/show the maximize and restore windowbar buttons
   document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
@@ -120,16 +121,18 @@ AppWindow.prototype.maximize = function() {
 }
 
 AppWindow.prototype.restore = function() {
-  this.element.style.left = this.lastX + "px";
-  this.element.style.top = this.lastY + "px";
-  this.element.style.width = this.lastWidth + "px";
-  this.wrapperElement.style.height = this.lastHeight + "px";
+    this.x = this.lastX;
+    this.y = this.lastY;
+    this.element.style.left = this.x + "px";
+    this.element.style.top = this.y + "px";
+    this.element.style.width = this.lastWidth + "px";
+    this.wrapperElement.style.height = this.lastHeight + "px";
 
-  //tell pwd this window is no longer in fullscreen (in case of browser resizing)
-  this.pwd.fullscreenedWindow = null;
+    //tell pwd this window is no longer in fullscreen (in case of browser resizing)
+    this.pwd.fullscreenedWindow = null;
 
-  document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
-  document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
+    document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
+    document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
 }
 
 module.exports = AppWindow;
