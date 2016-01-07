@@ -102,19 +102,12 @@ body {
   color: #FDA700;
 }
 
-.maximize-window, .maximize-window:visited{
+.maximize-window, .maximize-window:visited, .restore-window, .restore-window:visited{
   color: #7EB364;
 }
 
-.maximize-window:hover {
+.maximize-window:hover, .restore-window:hover {
   color: #66B340;
-}
-
-.restore-window, .restore-window:visited {
-    color: #78CEF9;
-}
-.restore-window:hover {
-    color: #66B8D4;
 }
 
 .window-content {

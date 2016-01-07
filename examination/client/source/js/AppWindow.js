@@ -3,30 +3,39 @@ var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
 function AppWindow(config) {
-  this.id = config.id;
-  this.pwd = config.pwd;
-  this.element;
-  this.elementWrapper;
-  this.width = config.width;
-  this.height = config.height;
-  this.x = config.x;
-  this.y = config.y;
-  this.init(config);
-  this.titleBarHeight = document.querySelector("#window-" + this.id + " .window-bar").scrollHeight; // used for drag rezising
-  this.resizeWindowWidth = new ResizeWindowWidth(this);
-  this.resizeWindowHeight = new ResizeWindowHeight(this);
-  this.resizeWindowWidthHeight = new ResizeWindowWidthHeight(this);
-  this.content = document.querySelector("#window-" + this.id + " .window-content");
-  // put on top if clicked
-  this.element.addEventListener("mousedown", this.moveToTop.bind(this), true);
-  // drag the window from the window bar
-  document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
-  // close event
-  document.querySelector("#window-" + this.id + " .close-window").addEventListener("click", this.close.bind(this));
-  // maximize event
-  document.querySelector("#window-" + this.id + " .maximize-window").addEventListener("click", this.maximize.bind(this));
-  // restore event
-  document.querySelector("#window-" + this.id + " .restore-window").addEventListener("click", this.restore.bind(this));
+    this.id = config.id;
+    this.pwd = config.pwd;
+    this.element;
+    this.elementWrapper;
+    this.width = config.width;
+    this.height = config.height;
+    this.x = config.x;
+    this.y = config.y;
+    this.minimized = false;
+    this.init(config);
+    this.titleBarHeight = document.querySelector("#window-" + this.id + " .window-bar").scrollHeight; // used for drag rezising
+    this.resizeWindowWidth = new ResizeWindowWidth(this);
+    this.resizeWindowHeight = new ResizeWindowHeight(this);
+    this.resizeWindowWidthHeight = new ResizeWindowWidthHeight(this);
+    this.content = document.querySelector("#window-" + this.id + " .window-content");
+
+    // put on top if clicked
+    this.element.addEventListener("mousedown", this.moveToTop.bind(this), true);
+
+    // drag the window from the window bar
+    document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
+
+    // close event
+    document.querySelector("#window-" + this.id + " .close-window").addEventListener("click", this.close.bind(this));
+
+    // maximize event
+    document.querySelector("#window-" + this.id + " .maximize-window").addEventListener("click", this.maximize.bind(this));
+
+    // restore event
+    document.querySelector("#window-" + this.id + " .restore-window").addEventListener("click", this.restore.bind(this));
+
+    // minimize
+    document.querySelector("#window-" + this.id + " .minimize-window").addEventListener("click", this.minimize.bind(this));
 }
 
 AppWindow.prototype.init = function(config) {
@@ -84,41 +93,46 @@ AppWindow.prototype.checkBounds = function(e){
 }
 
 AppWindow.prototype.stopDrag = function() {
-  this.element.classList.remove("dragging");
+    this.element.classList.remove("dragging");
 }
 
 AppWindow.prototype.moveToTop = function() {
-  this.pwd.lastZIndex += 1;
-  this.element.style.zIndex = this.pwd.lastZIndex;
+    this.pwd.lastZIndex += 1;
+    this.element.style.zIndex = this.pwd.lastZIndex;
 }
 
 AppWindow.prototype.close = function(event) {
-  this.pwd.closeApp(this);
+    this.pwd.closeApp(this);
 }
 
 AppWindow.prototype.maximize = function() {
-  // save the size and position so we can return to it with the restore window function
-  this.lastX = this.x;
-  this.lastY = this.y;
-  this.lastWidth = this.width;
-  this.lastHeight = this.height;
+    // save the size and position so we can return to it with the restore window function
+    this.lastX = this.x;
+    this.lastY = this.y;
+    this.lastWidth = this.width;
+    this.lastHeight = this.height;
 
-  // tell pwd this window is in fullscreen (in case of browser resizing)
-  this.pwd.fullscreenedWindow = this;
+    // tell pwd this window is in fullscreen (in case of browser resizing)
+    this.pwd.fullscreenedWindow = this;
 
-  // make the window fullscreen
-  this.element.style.left = "0px";
-  this.element.style.top = "0px";
-  this.element.style.width = this.pwd.width + "px";
-  var height = this.pwd.height - document.querySelector("#window-" + this.id + " .window-bar").getBoundingClientRect().height;
-  this.wrapperElement.style.height = height + "px";
-  this.x = 0;
-  this.y = 0;
+    // make the window fullscreen
+    this.element.style.left = "0px";
+    this.element.style.top = "0px";
+    this.element.style.width = this.pwd.width + "px";
+    var height = this.pwd.height - document.querySelector("#window-" + this.id + " .window-bar").getBoundingClientRect().height;
+    this.wrapperElement.style.height = height + "px";
+    this.x = 0;
+    this.y = 0;
 
-  // hide/show the maximize and restore windowbar buttons
-  document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
-  document.querySelector("#window-" + this.id + " .restore-window").classList.remove("hidden");
-}
+    // hide/show the maximize and restore windowbar buttons
+    document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
+    document.querySelector("#window-" + this.id + " .restore-window").classList.remove("hidden");
+
+    // if it was maximized from a minimized state
+    this.wrapperElement.classList.remove("hidden");
+    document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
+    this.minimized = false;
+};
 
 AppWindow.prototype.restore = function() {
     this.x = this.lastX;
@@ -133,6 +147,26 @@ AppWindow.prototype.restore = function() {
 
     document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
     document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
+};
+
+AppWindow.prototype.minimize = function() {
+    if (!this.minimized) {
+        this.lastX = this.x;
+        this.lastY = this.y;
+        this.lastWidth = this.width;
+        this.wrapperElement.classList.add("hidden");
+        document.querySelector("#window-" + this.id + " .window-resizer-y").classList.add("hidden");
+        this.element.style.width = "200px";
+        this.minimized = true;
+    } else {
+        this.minimized = false;
+        this.x = this.lastX;
+        this.y = this.lastY;
+        this.element.style.width = this.lastWidth + "px";
+        this.wrapperElement.classList.remove("hidden");
+        document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
+    }
+
 }
 
 module.exports = AppWindow;
