@@ -186,14 +186,7 @@ body {
   clear: both;
 }
 
-input[type="text"] {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    padding: 7px;
-    border-radius: 6px;
-    outline: none;
-    border: 1px solid #C8C8C8;
-}
+
 
 .btn {
     font-family: 'Roboto', sans-serif;
