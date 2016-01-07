@@ -2,11 +2,11 @@ var AppWindow = require("./AppWindow");
 var Mouse = require("./Mouse");
 var Shortcut = require("./Shortcut");
 var appList = require("./appList");
-var Taskbar = require("./Taskbar");
+// var Taskbar = require("./Taskbar");
 
 var Pwd = function(){
   this.mouse = new Mouse();
-  this.taskbar = new Taskbar.Taskbar();
+  // this.taskbar = new Taskbar.Taskbar();
   this.installedApps = [];
   this.startedApps = {};
   this.lastZIndex = 1;

@@ -12,7 +12,7 @@ function PwdApp(config) {
   this.appWindow = new AppWindow(config);
 
   // add to taskbar
-  this.taskbarApp = new Taskbar.TaskbarApp(config, this);
+  // this.taskbarApp = new Taskbar.TaskbarApp(config, this);
 }
 
 module.exports = PwdApp;

@@ -137,7 +137,7 @@ Chat.prototype.close = function() {
     document.querySelector("#pwd").removeChild(this.appWindow.element);
 
     // remove from taskbar
-    document.querySelector("#pwd .taskbar").removeChild(this.taskbarApp.element);
+    // document.querySelector("#pwd .taskbar").removeChild(this.taskbarApp.element);
 };
 
 
