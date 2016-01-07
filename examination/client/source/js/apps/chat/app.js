@@ -9,63 +9,78 @@ function Chat(config) {
 
     //this.inputName();
 
+    // create html
     var template = document.querySelector("#chat");
     this.element = document.importNode(template.content, true);
     this.appWindow.content.appendChild(this.element);
     this.chatChannelElement = document.querySelector("#window-" + this.id + " .chat-channels");
     this.channelListElement = document.querySelector("#window-" + this.id + " .chat-channel-list");
 
-    // hook up add channel button
-    this.addChannelButton = document.querySelector("#window-" + this.id + " input[type=button");
-    this.addChannelButton.addEventListener("click", function() {
-        this.activeChannel.hide();
-        this.activeChannel = new Channel(this, "test");
+    // hook up join channel button
+    this.joinChannelButton = document.querySelector("#window-" + this.id + " input[type=button");
+    this.joinChannelInput = document.querySelector("#window-" + this.id + " .chat-join-channel");
+
+    this.showJoinChannelInput = function() {
+        // remove the listener
+        this.joinChannelButton.removeEventListener("click", this.showJoinChannelInput);
+
+        // show the join new channel form and position it next to the mouse cursor
+        this.joinChannelInput.classList.remove("hidden");
+        
+        var btnboundingRect = this.joinChannelButton.getBoundingClientRect();
+        var inputBoundingRect = this.joinChannelInput.getBoundingClientRect();
+        console.log(btnboundingRect, inputBoundingRect);
+
+        this.joinChannelInput.style.left = btnboundingRect.left - this.appWindow.x + btnboundingRect.width + 4 + "px";
+        this.joinChannelInput.style.top = btnboundingRect.top - this.appWindow.y - (inputBoundingRect.height / 2) + (btnboundingRect.height / 2) + "px";
+
+        this.joinChannelInput.value = "";
+        this.joinChannelInput.focus();
+
+        event.stopPropagation(); // this click shouldnt pass through otherwise the input will be hidden by the windowclicklistener
+
+        //hide the join channel div if theres a click anywhere on screen except in the join channel div
+        this.hideJoinChannelForm = function() {
+            this.joinChannelInput.classList.add("hidden");
+            window.removeEventListener("click", this.hideJoinChannelForm);
+            this.joinChannelInput.removeEventListener("click", this.clickJoinCHannelForm);
+
+            // activate the join channel button again
+            this.joinChannelButton.addEventListener("click", this.showJoinChannelInput);
+        }.bind(this);
+
+        // dont hide if the click is in the join channel div
+        this.clickJoinCHannelForm = function(event) {
+            console.log("sssss");
+            event.stopPropagation();
+        }.bind(this);
+
+        window.addEventListener("click", this.hideJoinChannelForm);
+        this.joinChannelInput.addEventListener("click", this.clickJoinCHannelForm);
+    }.bind(this);
+
+    this.joinChannelButton.addEventListener("click", this.showJoinChannelInput);
+    this.joinChannelInput.addEventListener("keypress", function(event) {
+        // listen for enter key
+        if (event.keyCode === 13) {
+            // join channel
+            this.activeChannel.hide();
+            this.activeChannel = new Channel(this, event.target.value);
+            event.target.value = "";
+            this.hideJoinChannelForm();
+        }
     }.bind(this));
 
-    // this.channelListElement.firstElementChild.addEventListener("click", function() {
-    //     console.log("asdasdasdas")
-    // })
-
+    // socket stuff
     this.socket = null;
-
     this.connect().then(function(socket) {
         this.activeChannel = new Channel(this, "");
     }.bind(this));
 
-    
-
-
-
-
-    
-    // chat stuff
-    // this.socket = null;
-    // var template = document.querySelector("#chat");
-    // this.chatDiv = document.importNode(template.content.firstElementChild, true);
-    // this.connect().then(function(socket) {
-    //     console.log(socket);
-    // });
-
-    // this.chatDiv.addEventListener("keypress", function(event) {
-    //     // listen for enter key
-    //     if (event.keyCode === 13) {
-    //         //send a message
-    //         this.sendMessage(event.target.value);
-
-    //         // empty textarea
-    //         event.target.value = "";
-
-    //         event.preventDefault();
-    //     }
-    // }.bind(this));
-
-    // this.appWindow.content.appendChild(this.chatDiv);
-    
 }
 
 Chat.prototype = Object.create(PwdApp.prototype);
 Chat.prototype.constructor = Chat;
-
 
 Chat.prototype.connect = function() {
     return new Promise(function(resolve, reject){
@@ -93,9 +108,7 @@ Chat.prototype.connect = function() {
                 }
             }
         }.bind(this));
-
     }.bind(this));
-
 };
 
 Chat.prototype.sendMessage = function(channel, text) {
@@ -115,116 +128,6 @@ Chat.prototype.sendMessage = function(channel, text) {
 
 };
 
-
-
-/*
-Chat.prototype.inputName = function() {
-    var template = document.querySelector("#chat-name-input");
-    var clone = document.importNode(template.content, true);
-    this.appWindow.content.appendChild(clone);
-
-    document.querySelector(".chat-name-input input[type=button]").addEventListener("click", function() {
-        this.username = document.querySelector(".chat-name-input input[type=text]").value;
-        this.start();
-        this.joinChannel(""); // join default channel;
-        
-    }.bind(this));
-
-};
-
-*/
-
-Chat.prototype.start = function() {
-    /*
-    var template = document.querySelector("#chat");
-    this.element = document.importNode(template.content, true);
-    this.appWindow.content.textContent = "";
-    this.appWindow.content.appendChild(this.element);
-    this.channelListElement = document.querySelector("#window-" + this.id + " .chat-channel-list"); // the div with the list of connected channels
-    */
-};
-
-/*
-Chat.prototype.joinChannel = function(name) {
-    var newChannel = new Channel(this, name);
-    this.channels[name] = newChannel;
-
-    this.showChannel(newChannel);
-
-    //console.log(this.channelListElement.lastElementChild)
-    // add click listener to be able to show the channel
-    //this.channelListElement.lastElementChild.addEventListener("click", function() {
-    //    console.log("CLICAKSCAS");
-    //});
-};
-*/
-Chat.prototype.showChannel = function(channel) {
-    /*if (this.activeChannel) {
-        this.activeChannel.listEntryElement.classList.remove("chat-active-channel");
-    }
-    channel.listEntryElement.classList.add("chat-active-channel");
-    this.activeChannel = channel;
-    */
-};
-
-/*
-Chat.prototype.connect = function() {
-    return new Promise(function(resolve, reject){
-
-        if (this.socket && this.socket.readyState === 1) {
-            resolve(this.socket);
-            return;
-        }
-
-        this.socket = new WebSocket(socketConfig.address);
-
-        this.socket.addEventListener("open", function() {
-            resolve(this.socket);
-        }.bind(this));
-
-        this.socket.addEventListener("error", function(event) {
-            reject(new Error("Could not connect"));
-        }.bind(this));
-
-        this.socket.addEventListener("message", function(event) {
-            var message = JSON.parse(event.data);
-            if (message.type === "message") {
-                this.printMessage(message);
-            }
-        }.bind(this));
-
-    }.bind(this));
-
-};
-
-Chat.prototype.sendMessage = function(text) {
-    var data = {
-        type: "message",
-        data: text,
-        username: "Daniel",
-        channel: "dstest",
-        key: socketConfig.key
-    };
-
-    this.connect().then(function(socket) {
-        socket.send(JSON.stringify(data));
-    }).catch(function(error) {
-        console.log("Error: ", error);
-    });
-
-};
-
-Chat.prototype.printMessage = function(message) {
-    var template = this.chatDiv.querySelectorAll("template")[0];
-
-    var messageDiv = document.importNode(template.content.firstElementChild, true);
-    messageDiv.querySelectorAll(".chat-text")[0].textContent = message.data;
-    messageDiv.querySelectorAll(".chat-author")[0].textContent = message.username;
-
-    this.chatDiv.querySelectorAll(".chat-messages")[0].appendChild(messageDiv);
-};
-*/
-
 Chat.prototype.closeChannel = function(channel) {
     delete this.channels[channel.name];
 };
@@ -236,5 +139,6 @@ Chat.prototype.close = function() {
     // remove from taskbar
     document.querySelector("#pwd .taskbar").removeChild(this.taskbarApp.element);
 };
+
 
 module.exports = Chat;

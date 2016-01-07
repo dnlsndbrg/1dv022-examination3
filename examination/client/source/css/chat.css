@@ -27,10 +27,10 @@
 }
 .chat-channel-list-entry {
 	position: relative;
-	display: inline-block;
+	float: left;
 	cursor: pointer;
 	color: #686868;
-	padding: 6px;
+	padding: 6px 8px 6px 8px;
 }
 
 .chat-channel-list-entry:hover > .chat-close-channel{
@@ -52,8 +52,9 @@
 	bottom: 0;
 	width: 100%;
 	height: 20px;
-	border-top: 1px solid #7F7F7F;
-	
+	border-top: 1px solid #A8A8A8;
+	padding-top: 5px;
+	overflow: hidden;
 }
 
 .chat-message-input {
@@ -68,15 +69,31 @@
 	top: 0;
 	width: 9px;
 	height: 9px;
-	color: #fff;
+	color: #C7C7C7;
 	font-size: 0.5em;
-	background-color: #636363;
 }
 
 .chat-close-channel:hover {
 	background-color: #BF2020;
+	color: #FFF;
 }
 
 .chat-author {
 	color: #ABABAB;
+}
+
+.chat-channel-list input[type=button] {
+	float: left;
+	margin: 5px;
+}
+
+.chat-join-channel {
+	position: absolute;
+	top: 0;
+	left: 100px;
+	height: 30px;
+	background-color: #FFF;
+	padding: 15px;
+	border-radius: 6px;
+	box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.5);
 }

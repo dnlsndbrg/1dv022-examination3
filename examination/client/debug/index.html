@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="stylesheet/chat.css">
 </head>
 <body>
-  <div id="pwd"></div>
+    <div id="pwd"></div>
 
   <template id="taskbar">
     <div class="taskbar"></div>
@@ -54,31 +54,6 @@
     </div>
   </template>
 
-
-
-
-    <!-- <template id="chat-name-input">
-        <div class="chat-name-input">
-            Enter name: 
-            <input type="text" placeholder="Name" />
-            <br />
-            <input type="button" class="btn" Value="Go" />
-        </div>
-    </template>
-    -->
-
-    <!--<template id="chat-messages">
-        <div class="chat-messages">
-            <template>
-                <div class="chat-message">
-                <p class="chat-text"></p>
-                <p class="chat-author"></p>
-                </div>
-            </template>
-        </div>
-    </template>
-    -->
-
     <template id="chat-channel-list-entry">
         <div class="chat-channel-list-entry chat-active-channel">
             <i class="fa fa-times chat-close-channel"></i>
@@ -88,11 +63,12 @@
 
     <template id="chat">
         <div class="chat-channel-list-wrapper">
-            <div class="chat-channel-list"><input type="button" value="+" /></div>
-            <div class="chat-join-channel hidden">
-                <input type="text" placeholder="Join channel" />
+            <div class="chat-channel-list">
+                <input type="button" value="+" />
+                <div class="clear"></div>
             </div>
         </div>
+        <input class="chat-join-channel hidden" type="text" placeholder="Join channel" />
         <div class="chat-channels"></div>
     </template>
 

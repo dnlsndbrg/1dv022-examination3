@@ -23,8 +23,8 @@ var Channel = function(chat, name) {
     //channel list entry
     template = document.querySelector("#chat-channel-list-entry");
     var clone = document.importNode(template.content, true);
-    this.chat.channelListElement.insertBefore(clone, this.chat.addChannelButton);
-    this.listEntryElement = this.chat.channelListElement.lastElementChild.previousElementSibling;
+    this.chat.channelListElement.insertBefore(clone, this.chat.joinChannelButton);
+    this.listEntryElement = this.chat.channelListElement.lastElementChild.previousElementSibling.previousElementSibling;
     if (name === "") {
         name = "Default";
     }
@@ -73,7 +73,6 @@ Channel.prototype.closeChannel = function() {
     this.chat.chatChannelElement.removeChild(this.chatDiv);
 
     this.chat.closeChannel(this);
-}
-
+};
 
 module.exports = Channel;
