@@ -31,8 +31,8 @@ var Pwd = function(){
       icon: config.icon,
       pwd: this,
       id: this.lastID,
-      x: this.newX,
-      y: this.newY,
+      x: this.newX - config.width / 2,
+      y: this.newY - config.height / 3,
       zIndex: this.lastZIndex,
     });
     this.startedApps[this.lastID] = newApp;
@@ -52,8 +52,8 @@ var Pwd = function(){
         this.width = window.innerWidth;
         this.height = window.innerHeight;
 
-        this.newX = this.width / 2 - 250;
-        this.newY = this.height / 3 - 200;
+        this.newX = this.width / 2;
+        this.newY = this.height / 3;
 
         if (this.fullscreenedWindow) {
             this.fullscreenedWindow.maximize();

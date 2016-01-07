@@ -18,7 +18,6 @@ function shuffle(board) {
 
 function Board(pwd, columns, rows) {
     this.pwd = pwd;
-
     // TODO: verify width/height
     this.rows = rows;
     this.columns = columns;
@@ -32,7 +31,7 @@ function Board(pwd, columns, rows) {
 
     // create html
     this.element = document.createElement("div");
-    this.element.classList.add("board");
+    this.element.classList.add("memory-board");
     this.element.style.width = this.columns * this.imageSize + "px";
 
     document.querySelector("#window-" + this.pwd.id + " .window-content").appendChild(this.element);
@@ -60,10 +59,11 @@ function Board(pwd, columns, rows) {
         //remove keyboard select outline
         keyboard.removeOutline();
 
-        //calculate on what image the click is
-        var x = Math.floor((event.pageX - _this.element.offsetLeft) / _this.imageSize);
-        var y = Math.floor((event.pageY - _this.element.offsetTop) / _this.imageSize);
+        // //calculate on what image the click is
+        var x = Math.floor((event.pageX - _this.pwd.appWindow.x) / _this.imageSize);
+        var y = Math.floor((event.pageY - _this.pwd.appWindow.y -47) / _this.imageSize);
         var imageNumber = y * _this.columns + x;
+
         _this.imageArray[imageNumber].click(_this);
     });
 

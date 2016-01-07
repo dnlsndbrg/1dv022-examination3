@@ -2,55 +2,56 @@ var keyboard = require("./keyboard");
 
 function Image(imageNumber, board) {
 	this.element = document.createElement("div");
-	this.element.classList.add("image");
+	this.element.classList.add("memory-image");
+    this.element.setAttribute("data-imagenumber", imageNumber);
 	this.imageNumber = imageNumber;
 	this.board = board;
 	this.clickable = true;
 }
 
 Image.prototype.click = function() {
-	var _this = this;
+    var _this = this;
 
-	if (this.clickable) {
-		this.clickable = false;
-		this.show();
+    if (this.clickable) {
+        this.clickable = false;
+        this.show();
 
-		if (!this.board.selected) {
-			this.board.selected = this;
+        if (!this.board.selected) {
+            this.board.selected = this;
 
-		} else {
-			var _selected = this.board.selected;
-			this.board.attempts++;
-			document.querySelector("#attempts").textContent = this.board.attempts;
+        } else {
+            var _selected = this.board.selected;
+            this.board.attempts += 1;
+            //document.querySelector("#attempts").textContent = this.board.attempts;
 
-			if(this.board.selected.imageNumber === this.imageNumber) {
-				// match
-				keyboard.removeOutline();
-				this.element.classList.add("green");
-				_selected.element.classList.add("green");
-				this.board.selected = false;
-				setTimeout(function() {
-					_selected.remove();
-					_this.remove();
-				}, 400);
-				
-			} else {
-				// not a match
-				this.element.classList.add("red");
-				_selected.element.classList.add("red");
-				this.board.selected = false;
+            if(this.board.selected.imageNumber === this.imageNumber) {
+                // match
+                keyboard.removeOutline();
+                this.element.classList.add("memory-green");
+                _selected.element.classList.add("memory-green");
+                this.board.selected = false;
+                setTimeout(function() {
+                    _selected.remove();
+                    _this.remove();
+                }, 400);
 
-				setTimeout(function() {
-					_this.element.classList.remove("red");
-					_selected.element.classList.remove("red");
-					_selected.hide();
-					_selected.clickable = true;
-					_this.hide();
-					_this.clickable = true;
-				}, 1000);
-			}
-		}
-	}
+            } else {
+                // not a match
+                this.element.classList.add("memory-red");
+                _selected.element.classList.add("memory-red");
+                this.board.selected = false;
+
+                setTimeout(function() {
+                    _this.element.classList.remove("memory-red");
+                    _selected.element.classList.remove("memory-red");
+                    _selected.hide();
+                    _selected.clickable = true;
+                    _this.hide();
+                    _this.clickable = true;
+                }, 1000);
+            }
+        }
+    }
 };
 
 Image.prototype.hide = function() {
@@ -62,7 +63,7 @@ Image.prototype.show = function() {
 };
 
 Image.prototype.remove = function() {
-	this.element.classList.add("fade-out");
+	this.element.classList.add("memory-fade-out");
 };
 
 module.exports = Image;

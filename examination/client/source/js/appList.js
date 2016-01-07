@@ -9,8 +9,8 @@ module.exports = {
     "Memory": {
     entry: require("./apps/memory/app"),
     title: "Memory",
-    width: 500,
-    height: 400,
+    width: 885,
+    height: 680,
     icon: "fa-clone"
   }
 }
