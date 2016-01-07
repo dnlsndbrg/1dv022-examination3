@@ -1,7 +1,11 @@
 var PwdApp = require("../../../js/PwdApp");
+var Board = require("./Board.js");
 
 function Memory(config) {
     PwdApp.call(this, config);
+
+    this.board = new Board(this, 4,3);
+	this.board.startGame();
 }
 
 Memory.prototype = Object.create(PwdApp.prototype);
