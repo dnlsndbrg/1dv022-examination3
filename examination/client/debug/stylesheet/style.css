@@ -66,6 +66,13 @@ body {
   border-radius: 4px;
 }
 
+.window-animated {
+    -webkit-transition:all 0.1s ease-out;
+    -moz-transition:all 0.1s ease-out;
+    -o-transition:all 0.1s ease-out;
+    transition:all 0.1s ease-out
+}
+
 .window-bar {
   padding: 14px;
   color: #E3E3E3;

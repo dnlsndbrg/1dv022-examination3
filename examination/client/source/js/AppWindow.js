@@ -102,10 +102,19 @@ AppWindow.prototype.moveToTop = function() {
 }
 
 AppWindow.prototype.close = function(event) {
-    this.pwd.closeApp(this);
-}
+    this.animate();
+    this.element.style.opacity = 0;
+    this.element.style.top = this.y + 20 + "px";
+    this.element.style.width = this.width - 100 + "px";
+    this.element.style.left = this.x + 50 + "px";
+    setTimeout(function() {
+        this.pwd.closeApp(this);
+    }.bind(this), 100);
+};
 
 AppWindow.prototype.maximize = function() {
+    this.animate();
+
     // save the size and position so we can return to it with the restore window function
     this.lastX = this.x;
     this.lastY = this.y;
@@ -128,13 +137,14 @@ AppWindow.prototype.maximize = function() {
     document.querySelector("#window-" + this.id + " .maximize-window").classList.add("hidden");
     document.querySelector("#window-" + this.id + " .restore-window").classList.remove("hidden");
 
-    // if it was maximized from a minimized state
+    // if it is maximized from a minimized state
     this.wrapperElement.classList.remove("hidden");
     document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
     this.minimized = false;
 };
 
 AppWindow.prototype.restore = function() {
+    this.animate();
     this.x = this.lastX;
     this.y = this.lastY;
     this.element.style.left = this.x + "px";
@@ -147,18 +157,25 @@ AppWindow.prototype.restore = function() {
 
     document.querySelector("#window-" + this.id + " .maximize-window").classList.remove("hidden");
     document.querySelector("#window-" + this.id + " .restore-window").classList.add("hidden");
+
+    // if it is restored from a minimized state
+    this.wrapperElement.classList.remove("hidden");
+    document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
+    this.minimized = false;
 };
 
 AppWindow.prototype.minimize = function() {
     if (!this.minimized) {
+        this.animate();
         this.lastX = this.x;
         this.lastY = this.y;
         this.lastWidth = this.width;
-        this.wrapperElement.classList.add("hidden");
         document.querySelector("#window-" + this.id + " .window-resizer-y").classList.add("hidden");
+        this.wrapperElement.classList.add("hidden");
         this.element.style.width = "200px";
         this.minimized = true;
     } else {
+        this.animate();
         this.minimized = false;
         this.x = this.lastX;
         this.y = this.lastY;
@@ -166,7 +183,14 @@ AppWindow.prototype.minimize = function() {
         this.wrapperElement.classList.remove("hidden");
         document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
     }
+};
 
+AppWindow.prototype.animate = function() {
+    // add animation class
+    this.element.classList.add("window-animated");
+    setTimeout(function() {
+        this.element.classList.remove("window-animated");
+    }.bind(this), 100);
 }
 
 module.exports = AppWindow;
