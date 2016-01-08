@@ -18,10 +18,11 @@ function shuffle(board) {
 
 function Board(pwd, columns, rows) {
     this.pwd = pwd;
+
     // TODO: verify width/height
     this.rows = rows;
     this.columns = columns;
-    this.imageSize = 221;
+    this.imageSize = 110;
     this.attempts = 0;
     this.selected = false;
     this.keyboardSelect = {
@@ -30,17 +31,22 @@ function Board(pwd, columns, rows) {
     };
 
     // create html
+    this.wrapperElement = document.createElement("div");
+    this.wrapperElement.classList.add("memory-wrapper");
+
     this.element = document.createElement("div");
     this.element.classList.add("memory-board");
     this.element.style.width = this.columns * this.imageSize + "px";
+    this.element.style.minWidth = this.columns * this.imageSize + "px";
 
-    document.querySelector("#window-" + this.pwd.id + " .window-content").appendChild(this.element);
+    document.querySelector("#window-" + this.pwd.id + " .window-content").appendChild(this.wrapperElement);
+    this.wrapperElement.appendChild(this.element);
 
     //create array of images
     this.imageArray = [];
     var docfrag = document.createDocumentFragment();
     for (var i = 0; i < this.columns * this.rows; i += 1) {
-        var newImage = new Image(Math.floor(i / 2) + 1, this);
+        var newImage = new Image(Math.floor(i / 2) + 1, i, this);
         this.imageArray.push(newImage);
 
     }
@@ -54,18 +60,16 @@ function Board(pwd, columns, rows) {
     this.element.appendChild(docfrag);
 
     //handle clicks
-    var _this = this;
     this.element.addEventListener("click", function(event) {
         //remove keyboard select outline
         keyboard.removeOutline();
-
-        // //calculate on what image the click is
-        var x = Math.floor((event.pageX - _this.pwd.appWindow.x) / _this.imageSize);
-        var y = Math.floor((event.pageY - _this.pwd.appWindow.y -47) / _this.imageSize);
-        var imageNumber = y * _this.columns + x;
-
-        _this.imageArray[imageNumber].click(_this);
-    });
+        var clickedId = event.target.getAttribute("data-id");
+        this.imageArray.forEach(function(image) {
+            if (clickedId == image.id) {
+                image.click(this);
+            }
+        });
+    }.bind(this));
 
     //handle keyboard
     keyboard.handleInput(this);

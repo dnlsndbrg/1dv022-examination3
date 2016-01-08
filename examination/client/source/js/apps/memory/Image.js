@@ -1,12 +1,14 @@
 var keyboard = require("./keyboard");
 
-function Image(imageNumber, board) {
-	this.element = document.createElement("div");
-	this.element.classList.add("memory-image");
+function Image(imageNumber, id, board) {
+    this.element = document.createElement("div");
+    this.element.classList.add("memory-image");
     this.element.setAttribute("data-imagenumber", imageNumber);
-	this.imageNumber = imageNumber;
-	this.board = board;
-	this.clickable = true;
+    this.element.setAttribute("data-id", id);
+    this.id = id;
+    this.imageNumber = imageNumber;
+    this.board = board;
+    this.clickable = true;
 }
 
 Image.prototype.click = function() {
@@ -32,8 +34,8 @@ Image.prototype.click = function() {
                 this.board.selected = false;
                 setTimeout(function() {
                     _selected.remove();
-                    _this.remove();
-                }, 400);
+                    this.remove();
+                }.bind(this), 400);
 
             } else {
                 // not a match
@@ -42,28 +44,28 @@ Image.prototype.click = function() {
                 this.board.selected = false;
 
                 setTimeout(function() {
-                    _this.element.classList.remove("memory-red");
+                    this.element.classList.remove("memory-red");
                     _selected.element.classList.remove("memory-red");
                     _selected.hide();
                     _selected.clickable = true;
-                    _this.hide();
-                    _this.clickable = true;
-                }, 1000);
+                    this.hide();
+                    this.clickable = true;
+                }.bind(this), 1000);
             }
         }
     }
 };
 
 Image.prototype.hide = function() {
-	this.element.style.backgroundImage = "url('image/apps/memory/0.png')";
+    this.element.style.backgroundImage = "url('image/apps/memory/0.png')";
 };
 
 Image.prototype.show = function() {
-	this.element.style.backgroundImage = "url('image/apps/memory/" + this.imageNumber + ".png')";
+    this.element.style.backgroundImage = "url('image/apps/memory/" + this.imageNumber + ".png')";
 };
 
 Image.prototype.remove = function() {
-	this.element.classList.add("memory-fade-out");
+    this.element.classList.add("memory-fade-out");
 };
 
 module.exports = Image;

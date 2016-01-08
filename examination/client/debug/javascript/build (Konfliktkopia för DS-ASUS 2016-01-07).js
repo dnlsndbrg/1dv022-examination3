@@ -1,0 +1,1 @@
+console.error("Error: Cannot find module './socketConfig.json' from '/vagrant/examination/client/source/js/apps/chat'");

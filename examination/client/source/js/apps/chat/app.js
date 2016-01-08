@@ -6,10 +6,52 @@ function Chat(config) {
     PwdApp.call(this, config); //inherit from pwdApp object
     this.channels = {};
     this.activeChannel = null;
+    this.socket = null;
 
-    //this.inputName();
+    // get username
+    this.inputName().then(function(username) {
+        this.username = username;
+        this.startChat(); 
+    }.bind(this))
+    .then(this.connect())
+    .then( function(socket) {
+        this.activeChannel = new Channel(this, "");
+    }.bind(this));
 
-    // create html
+
+
+
+
+    //     // socket stuff
+    //     this.connect().then(function(socket) {
+    //         this.activeChannel = new Channel(this, "");
+    //     }.bind(this));
+
+
+
+
+    // }.bind(this));
+
+
+
+
+}
+
+Chat.prototype = Object.create(PwdApp.prototype);
+Chat.prototype.constructor = Chat;
+
+Chat.prototype.inputName = function() {
+    return new Promise(
+        function(resolve, reject) {
+            setTimeout(function() {
+                resolve();
+            }, 2000);
+        }
+    );
+};
+
+Chat.prototype.startChat = function() {
+   // create html
     var template = document.querySelector("#chat");
     this.element = document.importNode(template.content, true);
     this.appWindow.content.appendChild(this.element);
@@ -73,17 +115,7 @@ function Chat(config) {
             this.hideJoinChannelForm();
         }
     }.bind(this));
-
-    // socket stuff
-    this.socket = null;
-    this.connect().then(function(socket) {
-        this.activeChannel = new Channel(this, "");
-    }.bind(this));
-
-}
-
-Chat.prototype = Object.create(PwdApp.prototype);
-Chat.prototype.constructor = Chat;
+};
 
 Chat.prototype.connect = function() {
     return new Promise(function(resolve, reject){
@@ -118,7 +150,7 @@ Chat.prototype.sendMessage = function(channel, text) {
     var data = {
         type: "message",
         data: text,
-        username: "Michael Scott",
+        username: this.username,
         channel: channel,
         key: socketConfig.key
     };
