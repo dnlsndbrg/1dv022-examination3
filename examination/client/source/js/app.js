@@ -1,46 +1,48 @@
-var AppWindow = require("./AppWindow");
+//var AppWindow = require("./AppWindow");
 var Mouse = require("./Mouse");
 var Shortcut = require("./Shortcut");
 var appList = require("./appList");
+
 // var Taskbar = require("./Taskbar");
 
-var Pwd = function(){
-  this.mouse = new Mouse();
-  // this.taskbar = new Taskbar.Taskbar();
-  this.installedApps = [];
-  this.startedApps = {};
-  this.lastZIndex = 1;
-  this.lastID = 1;
-  this.newX = 10;
-  this.newY = 10;
-  this.fullscreenedWindow = null;
+var Pwd = function() {
+    this.mouse = new Mouse();
 
-  // creates shortcuts for all available apps
-  this.installApps = function() {
+    // this.taskbar = new Taskbar.Taskbar();
+    this.installedApps = [];
+    this.startedApps = {};
+    this.lastZIndex = 1;
+    this.lastID = 1;
+    this.newX = 10;
+    this.newY = 10;
+    this.fullscreenedWindow = null;
+
+    // creates shortcuts for all available apps
+    this.installApps = function() {
     for (var app in appList) {
-      this.installedApps.push(new Shortcut(appList[app], this))
-    };
-  }
+        this.installedApps.push(new Shortcut(appList[app], this));
+    }
+};
 
-  // start an app
-  this.startApp = function(config) {
-    var newApp = new config.entry({
-      title: config.title,
-      width: config.width,
-      height: config.height,
-      icon: config.icon,
-      pwd: this,
-      id: this.lastID,
-      x: this.newX - config.width / 2,
-      y: this.newY - config.height / 3,
-      zIndex: this.lastZIndex,
-    });
-    this.startedApps[this.lastID] = newApp;
-    this.lastZIndex += 1;
-    this.lastID += 1;
-    this.newX += 20;
-    this.newY += 20;
-  }
+    // start an app
+    this.startApp = function(config) {
+        var newApp = new config.entry({
+            title: config.title,
+            width: config.width,
+            height: config.height,
+            icon: config.icon,
+            pwd: this,
+            id: this.lastID,
+            x: this.newX - config.width / 2,
+            y: this.newY - config.height / 3,
+            zIndex: this.lastZIndex,
+        });
+        this.startedApps[this.lastID] = newApp;
+        this.lastZIndex += 1;
+        this.lastID += 1;
+        this.newX += 20;
+        this.newY += 20;
+    };
 
     this.closeApp = function(app) {
         this.startedApps[app.id].close();

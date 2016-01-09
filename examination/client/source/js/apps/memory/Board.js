@@ -36,6 +36,12 @@ function Board(pwd, columns, rows) {
 
     document.querySelector("#window-" + this.pwd.id).setAttribute("tabindex", 1);
 
+    // Attempts html
+    var template = document.querySelector("#memory-attempts");
+    var clone = document.importNode(template.content, true);
+    document.querySelector("#window-" + this.pwd.id + " .window-content").appendChild(clone);
+    this.attemptsDiv = document.querySelector("#window-" + this.pwd.id + " .memory-attempts");
+
     this.element = document.createElement("div");
     this.element.classList.add("memory-board");
     this.element.style.width = this.columns * this.imageSize + "px";

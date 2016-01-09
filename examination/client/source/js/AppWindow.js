@@ -5,8 +5,6 @@ var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 function AppWindow(config) {
     this.id = config.id;
     this.pwd = config.pwd;
-    this.element;
-    this.elementWrapper;
     this.width = config.width;
     this.height = config.height;
     this.x = config.x;
@@ -82,26 +80,28 @@ AppWindow.prototype.drag = function(e) {
     this.element.style.top = this.y + "px";
 };
 
-AppWindow.prototype.checkBounds = function(e){
-  if (e.pageX > this.pwd.width)
-    this.x = this.pwd.width + this.pwd.mouse.dragOffsetX;
-  if (e.pageY > this.pwd.height)
-    this.y = this.pwd.height + this.pwd.mouse.dragOffsetY;
-  else if (e.pageY < 1)
-    this.y = this.pwd.mouse.dragOffsetY;
-
-}
+AppWindow.prototype.checkBounds = function(e) {
+    if (e.pageX > this.pwd.width) {
+        this.x = this.pwd.width + this.pwd.mouse.dragOffsetX;
+    }
+    if (e.pageY > this.pwd.height) {
+        this.y = this.pwd.height + this.pwd.mouse.dragOffsetY;
+    }
+    else if (e.pageY < 1) {
+        this.y = this.pwd.mouse.dragOffsetY;
+    };
+};
 
 AppWindow.prototype.stopDrag = function() {
     this.element.classList.remove("dragging");
-}
+};
 
 AppWindow.prototype.moveToTop = function() {
     this.pwd.lastZIndex += 1;
     this.element.style.zIndex = this.pwd.lastZIndex;
-}
+};
 
-AppWindow.prototype.close = function(event) {
+AppWindow.prototype.close = function() {
     this.animate();
     this.element.style.opacity = 0;
     this.element.style.top = this.y + 20 + "px";

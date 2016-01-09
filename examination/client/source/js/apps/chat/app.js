@@ -25,15 +25,16 @@ Chat.prototype.constructor = Chat;
 Chat.prototype.inputName = function() {
     return new Promise(
         function(resolve, reject) {
-            // setTimeout(function() {
-            //     resolve();
-            // }, 2000);
+
+            // show name input text and button
             var template = document.querySelector("#chat-username-input");
             var clone = document.importNode(template.content, true);
             this.appWindow.content.appendChild(clone);
 
             var button = document.querySelector("#window-" + this.id + " .chat-btn-username");
             var textInput = document.querySelector("#window-" + this.id + " .chat-username-input input[type=text]");
+
+            textInput.focus();
 
             button.addEventListener("click", function() {
                 resolve(textInput.value);

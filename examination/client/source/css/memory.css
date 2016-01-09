@@ -11,6 +11,10 @@
 	background-size: contain;
 }
 
+.memory-image:hover {
+    background-color: #C6C6C6;
+}
+
 .memory-fade-out {
 	filter: alpha(opacity=0);
 	opacity: 0;
@@ -20,11 +24,11 @@
 	background-color: #69CDF5;
 }
 
-.memory-red {
+.memory-red, .memory-red:hover {
 	background-color: #F57878;
 }
 
-.memory-green {
+.memory-green,.memory-green:hover {
 	background-color: #87F569;
 }
 
@@ -35,4 +39,13 @@
 
 .memory-board {
     margin: auto;
+}
+
+.memory-attempts {
+    color: #161616;
+    font-size: 1.2em;
+    padding: 10px;
+    position: absolute;
+
+
 }

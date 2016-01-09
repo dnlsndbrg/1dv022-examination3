@@ -12,7 +12,6 @@ function Image(imageNumber, id, board) {
 }
 
 Image.prototype.click = function() {
-    var _this = this;
 
     if (this.clickable) {
         this.clickable = false;
@@ -24,8 +23,8 @@ Image.prototype.click = function() {
         } else {
             var _selected = this.board.selected;
             this.board.attempts += 1;
-            //document.querySelector("#attempts").textContent = this.board.attempts;
-
+            
+            this.board.attemptsDiv.textContent = "Attempts: " + this.board.attempts;
             if(this.board.selected.imageNumber === this.imageNumber) {
                 // match
                 keyboard.removeOutline(this.board);
