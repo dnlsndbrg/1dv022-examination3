@@ -34,6 +34,8 @@ function Board(pwd, columns, rows) {
     this.wrapperElement = document.createElement("div");
     this.wrapperElement.classList.add("memory-wrapper");
 
+    document.querySelector("#window-" + this.pwd.id).setAttribute("tabindex", 1);
+
     this.element = document.createElement("div");
     this.element.classList.add("memory-board");
     this.element.style.width = this.columns * this.imageSize + "px";
@@ -62,7 +64,7 @@ function Board(pwd, columns, rows) {
     //handle clicks
     this.element.addEventListener("click", function(event) {
         //remove keyboard select outline
-        keyboard.removeOutline();
+        keyboard.removeOutline(this);
         var clickedId = event.target.getAttribute("data-id");
         this.imageArray.forEach(function(image) {
             if (clickedId == image.id) {

@@ -28,7 +28,7 @@ Image.prototype.click = function() {
 
             if(this.board.selected.imageNumber === this.imageNumber) {
                 // match
-                keyboard.removeOutline();
+                keyboard.removeOutline(this.board);
                 this.element.classList.add("memory-green");
                 _selected.element.classList.add("memory-green");
                 this.board.selected = false;

@@ -1,11 +1,12 @@
-function removeOutline() {
-    if (document.querySelector(".memory-keyboardSelect")) {
-        document.querySelector(".memory-keyboardSelect").classList.remove("memory-keyboardSelect");
+function removeOutline(board){
+    console.log("aaaaaa",document.querySelector("#window-" + board.pwd.id))
+    if (document.querySelector("#window-" + board.pwd.id + " .memory-keyboardSelect")) {
+        document.querySelector("#window-" + board.pwd.id + " .memory-keyboardSelect").classList.remove("memory-keyboardSelect");
     }
 }
 
 function select(board) {
-    removeOutline();
+    removeOutline(board);
     var selected = board.keyboardSelect.x + board.keyboardSelect.y * board.columns;
     board.imageArray[selected].element.classList.add("memory-keyboardSelect");
 }
@@ -13,39 +14,39 @@ function select(board) {
 
 function handleInput(board) {
 
-    window.onkeyup = function(e) {
-
+    document.querySelector("#window-" + board.pwd.id).addEventListener("keyup", function(e) {
+        console.log("sss",e.which);
         var key = e.keyCode ? e.keyCode : e.which;
-        if (key == 37) {
+        if (key === 37) {
             //left
             if (board.keyboardSelect.x > 0) {
                 board.keyboardSelect.x -= 1;
                 select(board);
             }
-        }else if (key == 38) {
+        }else if (key === 38) {
         	//up
         	if (board.keyboardSelect.y > 0) {
         		board.keyboardSelect.y -= 1;
         		select(board);
         	}
-        }else if (key == 39) {
+        }else if (key === 39) {
         	//right
         	if (board.keyboardSelect.x < board.columns - 1) {
         		board.keyboardSelect.x += 1;
         		select(board);
         	}
-        } else if(key == 40) {
+        } else if(key === 40) {
         	//down
         	if (board.keyboardSelect.y < board.rows - 1) {
         		board.keyboardSelect.y += 1;
         		select(board);
         	}
-        } else if (key == 32) {
+        } else if (key === 32) {
         	//space
         var selected = board.keyboardSelect.x + board.keyboardSelect.y * board.columns;
         board.imageArray[selected].click();
         }
-    };
+    }, true);
 }
 
 

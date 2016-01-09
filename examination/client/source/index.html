@@ -30,30 +30,38 @@
     </div>
   </template>
 
-  <template id="appWindow">
-    <div class="window">
-      <div class="window-bar">
-        <i class="fa window-icon"></i>
-        <span class="window-bar-title"></span>
-        <span class="window-bar-controls">
-          <a href="#" class="minimize-window"><i class="fa fa-circle"></i></a>
-          <a href="#" class="maximize-window"><i class="fa fa-circle"></i></a>
-          <a href="#" class="restore-window hidden"><i class="fa fa-circle"></i></a>
-          <a href="#" class="close-window"><i class="fa fa-circle"></i></a>
-        </span>
-        <div class="clear"></div>
-      </div>
-      <div class="window-content-wrapper">
-        <div class="window-content"></div>
-        <div class="window-resizer-x"></div>
-        <div class="clear"></div>
-      </div>
-      <div class="window-resizer-y">
-        <div class="window-resizer-xy"></div>
-        <div class="clear"></div>
-      </div>
-    </div>
-  </template>
+    <template id="appWindow">
+        <div class="window">
+            <div class="window-bar">
+                <i class="fa window-icon"></i>
+                <span class="window-bar-title"></span>
+                <span class="window-bar-controls">
+                    <a href="#" class="minimize-window"><i class="fa fa-circle"></i></a>
+                    <a href="#" class="maximize-window"><i class="fa fa-circle"></i></a>
+                    <a href="#" class="restore-window hidden"><i class="fa fa-circle"></i></a>
+                    <a href="#" class="close-window"><i class="fa fa-circle"></i></a>
+                </span>
+                <div class="clear"></div>
+            </div>
+            <div class="window-content-wrapper">
+                <div class="window-content"></div>
+                <div class="window-resizer-x"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="window-resizer-y">
+                <div class="window-resizer-xy"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="chat-username-input">
+        <div class="chat-username-input">
+            <input type="text" placeholder="Username" />
+            <input type="button" value="connect" class="chat-btn-username" />
+        </div>
+    </template>
 
     <template id="chat-channel-list-entry">
         <div class="chat-channel-list-entry chat-active-channel">
@@ -65,7 +73,7 @@
     <template id="chat">
         <div class="chat-channel-list-wrapper">
             <div class="chat-channel-list">
-                <input type="button" value="+" />
+                <input type="button" value="+" class="chat-btn-newchannel" />
                 <div class="clear"></div>
             </div>
         </div>

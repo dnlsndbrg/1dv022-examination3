@@ -8,33 +8,15 @@ function Chat(config) {
     this.activeChannel = null;
     this.socket = null;
 
-    // get username
-    this.inputName().then(function(username) {
+    this.inputName() // get username
+    .then(function(username) {
         this.username = username;
-        this.startChat(); 
+        this.startChat();
     }.bind(this))
-    .then(this.connect())
-    .then( function(socket) {
-        this.activeChannel = new Channel(this, "");
+    .then(this.connect()) // then we connect
+    .then(function() {
+        this.activeChannel = new Channel(this, ""); // then we connect to the default channel
     }.bind(this));
-
-
-
-
-
-    //     // socket stuff
-    //     this.connect().then(function(socket) {
-    //         this.activeChannel = new Channel(this, "");
-    //     }.bind(this));
-
-
-
-
-    // }.bind(this));
-
-
-
-
 }
 
 Chat.prototype = Object.create(PwdApp.prototype);
@@ -43,15 +25,35 @@ Chat.prototype.constructor = Chat;
 Chat.prototype.inputName = function() {
     return new Promise(
         function(resolve, reject) {
-            setTimeout(function() {
-                resolve();
-            }, 2000);
-        }
+            // setTimeout(function() {
+            //     resolve();
+            // }, 2000);
+            var template = document.querySelector("#chat-username-input");
+            var clone = document.importNode(template.content, true);
+            this.appWindow.content.appendChild(clone);
+
+            var button = document.querySelector("#window-" + this.id + " .chat-btn-username");
+            var textInput = document.querySelector("#window-" + this.id + " .chat-username-input input[type=text]");
+
+            button.addEventListener("click", function() {
+                resolve(textInput.value);
+            }.bind(this));
+
+            textInput.addEventListener("keypress", function(event) {
+                if (event.keyCode === 13) {
+                    resolve(textInput.value);
+                }
+            }.bind(this));
+
+        }.bind(this)
     );
 };
 
 Chat.prototype.startChat = function() {
-   // create html
+    // clear window of previous element (the input username screen)
+    document.querySelector("#window-" + this.id + " .window-content").textContent = "";
+    
+    // create html
     var template = document.querySelector("#chat");
     this.element = document.importNode(template.content, true);
     this.appWindow.content.appendChild(this.element);

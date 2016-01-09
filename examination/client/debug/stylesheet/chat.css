@@ -91,7 +91,7 @@
 	color: #ABABAB;
 }
 
-.chat-channel-list input[type=button] {
+.chat-channel-list .chat-btn-newchannel {
 	float: left;
 	margin: 5px;
 }
@@ -112,3 +112,9 @@
 }
 
 
+.chat-username-input {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
