@@ -12,7 +12,33 @@ function AppWindow(config) {
     this.x = config.x;
     this.y = config.y;
     this.minimized = false;
-    this.init(config);
+    this.maximized = false;
+
+    // create html
+    var clone = document.importNode(document.querySelector("#appWindow").content, true);
+    document.querySelector("#pwd").appendChild(clone);
+
+    // define this.element
+    this.element = document.querySelector("#pwd").lastElementChild;
+
+    // set id
+    this.element.setAttribute("id", "window-" + this.id);
+
+    // define this.wrapperElement
+    this.wrapperElement = document.querySelector("#window-" + this.id + " .window-content-wrapper");
+
+    // set window bar icon
+    document.querySelector("#window-" + this.id + " .fa").classList.add(config.icon);
+
+    // set window bar title
+    document.querySelector("#window-" + this.id + " .window-bar-title").textContent = config.title;
+
+    // set position and size
+    this.element.style.left = config.x + "px";
+    this.element.style.top = config.y + "px";
+    this.element.style.zIndex = config.zIndex;
+    this.element.style.width = config.width + "px";
+    this.wrapperElement.style.height = config.height  + "px";
     this.titleBarHeight = document.querySelector("#window-" + this.id + " .window-bar").scrollHeight; // used for drag rezising
     this.resizeWindowWidth = new ResizeWindowWidth(this);
     this.resizeWindowHeight = new ResizeWindowHeight(this);
@@ -24,6 +50,9 @@ function AppWindow(config) {
 
     // drag the window from the window bar
     document.querySelector("#window-" + this.id + " .window-bar").addEventListener("mousedown", this.startDrag.bind(this));
+
+    // double click window bar
+    document.querySelector("#window-" + this.id + " .window-bar").addEventListener("dblclick", this.dblclick.bind(this));
 
     // close event
     document.querySelector("#window-" + this.id + " .close-window").addEventListener("click", this.close.bind(this));
@@ -38,49 +67,20 @@ function AppWindow(config) {
     document.querySelector("#window-" + this.id + " .minimize-window").addEventListener("click", this.minimize.bind(this));
 }
 
-AppWindow.prototype.init = function(config) {
-  // create html
-  var clone = document.importNode(document.querySelector("#appWindow").content, true);
-  document.querySelector("#pwd").appendChild(clone);
-
-  // define this.element
-  this.element = document.querySelector("#pwd").lastElementChild;
-
-  // set id
-  this.element.setAttribute("id", "window-" + this.id);
-
-  // define this.wrapperElement
-  this.wrapperElement = document.querySelector("#window-" + this.id + " .window-content-wrapper");
-
-  // set window bar icon
-  document.querySelector("#window-" + this.id + " .fa").classList.add(config.icon);
-
-  // set window bar title
-  document.querySelector("#window-" + this.id + " .window-bar-title").textContent = config.title;
-
-  // set position and size
-  this.element.style.left = config.x + "px";
-  this.element.style.top = config.y + "px";
-  this.element.style.zIndex = config.zIndex;
-  this.element.style.width = config.width + "px";
-  this.wrapperElement.style.height = config.height  + "px";
-
-}
-
 AppWindow.prototype.startDrag = function(event) {
-  this.pwd.mouse.draggedObject = this;
-  this.pwd.mouse.dragOffsetX = this.element.offsetLeft - event.pageX;
-  this.pwd.mouse.dragOffsetY = this.element.offsetTop - event.pageY;
-  this.element.classList.add("dragging");
-}
+    this.pwd.mouse.draggedObject = this;
+    this.pwd.mouse.dragOffsetX = this.element.offsetLeft - event.pageX;
+    this.pwd.mouse.dragOffsetY = this.element.offsetTop - event.pageY;
+    this.element.classList.add("dragging");
+};
 
 AppWindow.prototype.drag = function(e) {
-  this.x = e.pageX + this.pwd.mouse.dragOffsetX;
-  this.y = e.pageY + this.pwd.mouse.dragOffsetY;
-  this.checkBounds(e);
-  this.element.style.left =  this.x + "px";
-  this.element.style.top = this.y + "px";
-}
+    this.x = e.pageX + this.pwd.mouse.dragOffsetX;
+    this.y = e.pageY + this.pwd.mouse.dragOffsetY;
+    this.checkBounds(e);
+    this.element.style.left =  this.x + "px";
+    this.element.style.top = this.y + "px";
+};
 
 AppWindow.prototype.checkBounds = function(e){
   if (e.pageX > this.pwd.width)
@@ -113,6 +113,7 @@ AppWindow.prototype.close = function(event) {
 };
 
 AppWindow.prototype.maximize = function() {
+    this.maximized = true;
     this.animate();
 
     // save the size and position so we can return to it with the restore window function
@@ -144,6 +145,7 @@ AppWindow.prototype.maximize = function() {
 };
 
 AppWindow.prototype.restore = function() {
+    this.maximized = false;
     this.animate();
     this.x = this.lastX;
     this.y = this.lastY;
@@ -165,6 +167,8 @@ AppWindow.prototype.restore = function() {
 };
 
 AppWindow.prototype.minimize = function() {
+    this.maximized = false;
+
     if (!this.minimized) {
         this.animate();
         this.lastX = this.x;
@@ -185,12 +189,22 @@ AppWindow.prototype.minimize = function() {
     }
 };
 
+AppWindow.prototype.dblclick = function() {
+    if (this.minimized) {
+        this.minimize();
+    } else if (this.maximized) {
+        this.restore();
+    } else {
+        this.maximize();
+    }
+};
+
 AppWindow.prototype.animate = function() {
     // add animation class
     this.element.classList.add("window-animated");
     setTimeout(function() {
         this.element.classList.remove("window-animated");
     }.bind(this), 100);
-}
+};
 
 module.exports = AppWindow;
