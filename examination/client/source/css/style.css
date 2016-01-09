@@ -91,7 +91,9 @@ body {
 }
 
 .window-bar-controls {
-  float: right;
+    background-color: #243342;
+    position: absolute;
+    right: 10px;
 }
 
 .close-window, .close-window:visited {
