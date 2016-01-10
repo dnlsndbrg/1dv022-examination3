@@ -13,8 +13,6 @@ var Pwd = function() {
     this.startedApps = {};
     this.lastZIndex = 1;
     this.lastID = 1;
-    this.newX = 10;
-    this.newY = 10;
     this.fullscreenedWindow = null;
 
     // creates shortcuts for all available apps
@@ -26,6 +24,9 @@ var Pwd = function() {
 
     // start an app
     this.startApp = function(config) {
+
+        var position = this.calculateStartPosition(config);
+
         var newApp = new config.entry({
             title: config.title,
             width: config.width,
@@ -33,15 +34,48 @@ var Pwd = function() {
             icon: config.icon,
             pwd: this,
             id: this.lastID,
-            x: this.newX - config.width / 2,
-            y: this.newY - config.height / 3,
-            zIndex: this.lastZIndex,
+            x: position.x,
+            y: position.y,
+            zIndex: this.lastZIndex
         });
         this.startedApps[this.lastID] = newApp;
         this.lastZIndex += 1;
         this.lastID += 1;
+
+    };
+
+    this.calculateStartPosition = function(config) {
+        // make sure the starting X Y coordinates are good
+
+        var x = this.newX - config.width / 2;
+        var y = this.newY - config.height / 2;
+
+        // reset if X is off screen
+        if (x > this.width - 40 || y > this.height - 40) {
+            this.originalX += 20;
+            if (this.originalX > this.width - 20) {
+                this.originalX = 20;
+            }
+
+            this.newX = this.originalX;
+            this.newY = this.originalY;
+        }
+
+        // reset if Y is off screen
+
         this.newX += 20;
         this.newY += 20;
+
+        // check if the new app is bigger than the pwd window
+        if (x < 0) {
+            x = 0;
+        }
+
+        if (y < 0) {
+            y = 0;
+        }
+
+        return {x: x, y: y};
     };
 
     this.closeApp = function(app) {
@@ -55,7 +89,9 @@ var Pwd = function() {
         this.height = window.innerHeight;
 
         this.newX = this.width / 2;
-        this.newY = this.height / 3;
+        this.newY = this.height / 2.5;
+        this.originalX = this.newX;
+        this.originalY = this.newY;
 
         if (this.fullscreenedWindow) {
             this.fullscreenedWindow.maximize();
@@ -65,5 +101,5 @@ var Pwd = function() {
 
 var pwd = new Pwd();
 pwd.installApps(); // create shortcuts for all available apps
-pwd.resize(); // run resize once to set width and height
+pwd.resize(); // run resize once to get width and calculate start position of apps
 window.addEventListener("resize", pwd.resize.bind(pwd));

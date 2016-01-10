@@ -78,8 +78,6 @@ Chat.prototype.startChat = function() {
         var left = btnboundingRect.left - this.appWindow.x + btnboundingRect.width + 4 + "px";
         var top = btnboundingRect.top - this.appWindow.y - (inputBoundingRect.height / 2) + (btnboundingRect.height / 2) + "px";
 
-        console.log(btnboundingRect.left,this.appWindow.x)
-
         this.joinChannelInput.style.left = left;
         this.joinChannelInput.style.top = top;
 

@@ -83,7 +83,6 @@ function Board(pwd, columns, rows) {
     keyboard.handleInput(this);
 
     this.startGame = function() {
-        console.log("start");
         this.attempts = 0;
         this.selected = false;
 

@@ -12,7 +12,6 @@ function select(board) {
 
 function handleInput(board) {
     document.querySelector("#window-" + board.pwd.id).addEventListener("keyup", function(e) {
-        console.log("sss", e.which);
         var key = e.keyCode ? e.keyCode : e.which;
         if (key === 37) {
             //left

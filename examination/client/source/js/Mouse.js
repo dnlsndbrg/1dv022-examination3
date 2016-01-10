@@ -20,19 +20,6 @@ function Mouse(){
   document.addEventListener("mousemove", this.mousemove.bind(this));
 
   return this;
-  // this.selected = null;
-  // this.move = function(event) {
-  //   console.log("move", this)
-  //
-  //   // if (this.selected) {
-  //   //   this.selected.style.left = event.offsetX + "px";
-  //   // }
-  // }
-  //
-  //
-  // //window.addEventListener("mousemove");
-  //
-  // return this;
 };
 
 module.exports = Mouse;

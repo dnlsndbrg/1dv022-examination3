@@ -23,9 +23,9 @@ Image.prototype.click = function() {
         } else {
             var _selected = this.board.selected;
             this.board.attempts += 1;
-            
+
             this.board.attemptsDiv.textContent = "Attempts: " + this.board.attempts;
-            if(this.board.selected.imageNumber === this.imageNumber) {
+            if (this.board.selected.imageNumber === this.imageNumber) {
                 // match
                 keyboard.removeOutline(this.board);
                 this.element.classList.add("memory-green");
