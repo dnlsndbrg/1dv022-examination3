@@ -1,25 +1,36 @@
+/**
+ * Mouse
+ */
 function Mouse(){
-  this.draggedObject = null;
-  this.dragOffsetX = 0;
-  this.dragOffsetY = 0;
+    this.draggedObject = null;
+    this.dragOffsetX = 0;
+    this.dragOffsetY = 0;
 
-  this.mouseup = function(e) {
-    if (this.draggedObject !== null) {
-      this.draggedObject.stopDrag(e);
-      this.draggedObject = null;
-    }
-  };
+    /**
+    * on mouseup event check if a window is being dragged
+    * @param  {[type]} e - mouseup event object
+    */
+    this.mouseup = function(event) {
+        if (this.draggedObject !== null) {
+            this.draggedObject.stopDrag(event);
+            this.draggedObject = null;
+        }
+    };
 
-  this.mousemove = function(e) {
-    if (this.draggedObject !== null) {
-      this.draggedObject.drag(e);
-    }
-  };
+    /**
+     * whenever mouse is moved
+     * @param  {object} event - mousemove event objectn]
+     */
+    this.mousemove = function(event) {
+        if (this.draggedObject !== null) {
+            this.draggedObject.drag(event);
+        }
+    };
 
-  document.addEventListener("mouseup", this.mouseup.bind(this));
-  document.addEventListener("mousemove", this.mousemove.bind(this));
+    document.addEventListener("mouseup", this.mouseup.bind(this));
+    document.addEventListener("mousemove", this.mousemove.bind(this));
 
-  return this;
-};
+    return this;
+}
 
 module.exports = Mouse;

@@ -1,5 +1,11 @@
 var keyboard = require("./keyboard");
 
+/**
+ * image constructor
+ * @param {Number} imageNumber
+ * @param {Number} id
+ * @param {Object} board
+ */
 function Image(imageNumber, id, board) {
     this.element = document.createElement("div");
     this.element.classList.add("memory-image");
@@ -11,6 +17,9 @@ function Image(imageNumber, id, board) {
     this.clickable = true;
 }
 
+/**
+ * handle clicks
+ */
 Image.prototype.click = function() {
 
     if (this.clickable) {
@@ -55,14 +64,23 @@ Image.prototype.click = function() {
     }
 };
 
+/**
+ * flip back the image
+ */
 Image.prototype.hide = function() {
     this.element.style.backgroundImage = "url('image/apps/memory/0.png')";
 };
 
+/** 
+ * reveal image
+ */
 Image.prototype.show = function() {
     this.element.style.backgroundImage = "url('image/apps/memory/" + this.imageNumber + ".png')";
 };
 
+/** 
+ * remove image
+ */
 Image.prototype.remove = function() {
     this.element.classList.add("memory-fade-out");
 };

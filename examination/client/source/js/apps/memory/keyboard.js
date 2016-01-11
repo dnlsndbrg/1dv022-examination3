@@ -1,15 +1,27 @@
+/**
+ * remove the outline from selected memory image
+ * @param  {object} board - board reference
+ */
 function removeOutline(board) {
     if (document.querySelector("#window-" + board.pwd.id + " .memory-keyboardSelect")) {
         document.querySelector("#window-" + board.pwd.id + " .memory-keyboardSelect").classList.remove("memory-keyboardSelect");
     }
 }
 
+/** 
+ * select an image
+ * @param  {object} board
+ */
 function select(board) {
     removeOutline(board);
     var selected = board.keyboardSelect.x + board.keyboardSelect.y * board.columns;
     board.imageArray[selected].element.classList.add("memory-keyboardSelect");
 }
 
+/** 
+* Capture keyboard presses and use it to select memory cards
+* @param  {object} board
+ */
 function handleInput(board) {
     document.querySelector("#window-" + board.pwd.id).addEventListener("keyup", function(e) {
         var key = e.keyCode ? e.keyCode : e.which;

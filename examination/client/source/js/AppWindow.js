@@ -2,6 +2,10 @@ var ResizeWindowWidth = require("./ResizeWindowWidth");
 var ResizeWindowHeight = require("./ResizeWindowHeight");
 var ResizeWindowWidthHeight = require("./ResizeWindowWidthHeight");
 
+/**
+ * AppWindow Constructor. This object handles the graphics and all related events such as resizing, maximizing, closing etc.
+ * @param {object} config - it takes the app config as an argument
+ */
 function AppWindow(config) {
     this.id = config.id;
     this.pwd = config.pwd;
@@ -65,6 +69,10 @@ function AppWindow(config) {
     document.querySelector("#window-" + this.id + " .minimize-window").addEventListener("click", this.minimize.bind(this));
 }
 
+/**
+ * user has hast started to drag the window bar
+ * @param  {object} event - the click handler event object
+ */
 AppWindow.prototype.startDrag = function(event) {
     this.pwd.mouse.draggedObject = this;
     this.pwd.mouse.dragOffsetX = this.element.offsetLeft - event.pageX;
@@ -72,35 +80,53 @@ AppWindow.prototype.startDrag = function(event) {
     this.element.classList.add("dragging");
 };
 
-AppWindow.prototype.drag = function(e) {
-    this.x = e.pageX + this.pwd.mouse.dragOffsetX;
-    this.y = e.pageY + this.pwd.mouse.dragOffsetY;
-    this.checkBounds(e);
+/**
+ * user is dragging an app window
+ * @param  {object} event - the mousemove event object
+ */
+AppWindow.prototype.drag = function(event) {
+    this.x = event.pageX + this.pwd.mouse.dragOffsetX;
+    this.y = event.pageY + this.pwd.mouse.dragOffsetY;
+    this.checkBounds(event);
     this.element.style.left =  this.x + "px";
     this.element.style.top = this.y + "px";
 };
 
-AppWindow.prototype.checkBounds = function(e) {
-    if (e.pageX > this.pwd.width) {
+/**
+ * checks that a dragged window isnt dragged off screen
+ * @param  {object} event - the mousemove event object
+ */
+AppWindow.prototype.checkBounds = function(event) {
+    if (event.pageX > this.pwd.width) {
         this.x = this.pwd.width + this.pwd.mouse.dragOffsetX;
     }
-    if (e.pageY > this.pwd.height) {
+
+    if (event.pageY > this.pwd.height) {
         this.y = this.pwd.height + this.pwd.mouse.dragOffsetY;
     }
-    else if (e.pageY < 1) {
+    else if (event.pageY < 1) {
         this.y = this.pwd.mouse.dragOffsetY;
-    };
+    }
 };
 
+/**
+ * user has stopp dragging
+ */
 AppWindow.prototype.stopDrag = function() {
     this.element.classList.remove("dragging");
 };
 
+/**
+ * position this window in front of other windows
+ */
 AppWindow.prototype.moveToTop = function() {
     this.pwd.lastZIndex += 1;
     this.element.style.zIndex = this.pwd.lastZIndex;
 };
 
+/**
+ * close this window
+ */
 AppWindow.prototype.close = function() {
     this.animate();
     this.element.style.opacity = 0;
@@ -112,6 +138,9 @@ AppWindow.prototype.close = function() {
     }.bind(this), 100);
 };
 
+/**
+ * make the window fullscreen
+ */
 AppWindow.prototype.maximize = function() {
     this.maximized = true;
     this.animate();
@@ -144,6 +173,9 @@ AppWindow.prototype.maximize = function() {
     this.minimized = false;
 };
 
+/**
+ * bring the window from fullscreen back to previous size
+ */
 AppWindow.prototype.restore = function() {
     this.maximized = false;
     this.animate();
@@ -166,6 +198,9 @@ AppWindow.prototype.restore = function() {
     this.minimized = false;
 };
 
+/**
+ * minimize this window
+ */
 AppWindow.prototype.minimize = function() {
     this.maximized = false;
 
@@ -189,6 +224,9 @@ AppWindow.prototype.minimize = function() {
     }
 };
 
+/**
+ * handle double clicks on the window bar
+ */
 AppWindow.prototype.dblclick = function() {
     if (this.minimized) {
         this.minimize();
@@ -199,6 +237,9 @@ AppWindow.prototype.dblclick = function() {
     }
 };
 
+/**
+ * add css animations for 100ms and then remove it so it wont interfer with dragging behaviour
+ */
 AppWindow.prototype.animate = function() {
     // add animation class
     this.element.classList.add("window-animated");

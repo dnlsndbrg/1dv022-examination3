@@ -1,6 +1,10 @@
 var Image = require("./Image");
 var keyboard = require("./keyboard");
 
+/**
+ * shuffle the array of images
+ * @param  {object} board - reference to the board
+ */
 function shuffle(board) {
     var i;
     var randomIndex;
@@ -16,6 +20,12 @@ function shuffle(board) {
     }
 }
 
+/** 
+ * Board 
+ * @param {object} pwd - pwd reference
+ * @param {number} columns - how many columns wide the memory game should me
+ * @param {number} rows - how many rows
+ */
 function Board(pwd, columns, rows) {
     this.pwd = pwd;
 
@@ -35,6 +45,9 @@ function Board(pwd, columns, rows) {
     this.wrapperElement.classList.add("memory-wrapper");
 
     document.querySelector("#window-" + this.pwd.id).setAttribute("tabindex", 1);
+
+    // menu
+    this.menuElement = document.querySelector("#window-" + this.pwd.id + " .window-menu");
 
     // Attempts html
     var template = document.querySelector("#memory-attempts");
@@ -81,6 +94,10 @@ function Board(pwd, columns, rows) {
 
     //handle keyboard
     keyboard.handleInput(this);
+
+    this.settings = function() {
+
+    };
 
     this.startGame = function() {
         this.attempts = 0;

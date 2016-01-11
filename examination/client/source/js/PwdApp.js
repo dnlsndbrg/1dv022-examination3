@@ -1,5 +1,5 @@
 var AppWindow = require("./AppWindow");
-//var Taskbar = require("./Taskbar");
+var AppMenu = require("./AppMenu");
 
 function PwdApp(config) {
     this.title = config.title;
@@ -10,9 +10,6 @@ function PwdApp(config) {
     config.height = this.height;
     config.title = this.title;
     this.appWindow = new AppWindow(config);
-
-    // add to taskbar
-    // this.taskbarApp = new Taskbar.TaskbarApp(config, this);
 }
 
 module.exports = PwdApp;

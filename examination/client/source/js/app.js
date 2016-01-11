@@ -1,28 +1,32 @@
-//var AppWindow = require("./AppWindow");
 var Mouse = require("./Mouse");
 var Shortcut = require("./Shortcut");
 var appList = require("./appList");
 
-// var Taskbar = require("./Taskbar");
 
+/**
+ * Personal Web Desktop
+ */
 var Pwd = function() {
     this.mouse = new Mouse();
-
-    // this.taskbar = new Taskbar.Taskbar();
     this.installedApps = [];
     this.startedApps = {};
     this.lastZIndex = 1;
     this.lastID = 1;
     this.fullscreenedWindow = null;
 
-    // creates shortcuts for all available apps
+    /**
+     * create shortcuts for all available apps
+     */
     this.installApps = function() {
-    for (var app in appList) {
-        this.installedApps.push(new Shortcut(appList[app], this));
-    }
-};
+        for (var app in appList) {
+            this.installedApps.push(new Shortcut(appList[app], this));
+        }
+    };
 
-    // start an app
+    /**
+     * When the user clicks an app shortcut this function will start the app
+     * @param  {object} config - contains app settings. The configuration comes from appList.js
+     */
     this.startApp = function(config) {
 
         var position = this.calculateStartPosition(config);
@@ -44,6 +48,10 @@ var Pwd = function() {
 
     };
 
+    /**
+     * Calculate where new apps should appear on the screen
+     * @param  {object} config - contains the  apps standard width and height
+     */
     this.calculateStartPosition = function(config) {
         // make sure the starting X Y coordinates are good
 
@@ -78,11 +86,18 @@ var Pwd = function() {
         return {x: x, y: y};
     };
 
+    /**
+     * Close an app
+     * @param  {object} app
+     */
     this.closeApp = function(app) {
         this.startedApps[app.id].close();
         delete this.startedApps[app.id];
     };
 
+    /**
+     * Browser resize
+     */
     this.resize = function() {
 
         this.width = window.innerWidth;

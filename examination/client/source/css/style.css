@@ -97,51 +97,73 @@ body {
 }
 
 .close-window, .close-window:visited {
-  color: #D26B30;
+    color: #D26B30;
 }
 
 .close-window:hover {
-  color: #D15006;
+    color: #D15006;
+}
+
+.close-window:active {
+    position: relative;
+    top: 1px;
+    color: #B84605;
 }
 
 .minimize-window, .minimize-window:visited {
-  color: #FDB833;
+    color: #FDB833;
 }
 
 .minimize-window:hover {
   color: #FDA700;
 }
 
+.minimize-window:active {
+    position: relative;
+    top: 1px;
+    color: #E69900;
+}
+
 .maximize-window, .maximize-window:visited, .restore-window, .restore-window:visited{
-  color: #7EB364;
+    color: #7EB364;
 }
 
 .maximize-window:hover, .restore-window:hover {
-  color: #66B340;
+    color: #66B340;
+}
+
+.maximize-window:active {
+    position: relative;
+    top: 1px;
+    color: #579937;
+}
+
+.window-menu {
+    background-color: #fff;
 }
 
 .window-content {
-  overflow: auto;
-  height: 100%;
-  background-color: #FFF;
+    overflow: auto;
+    height: 100%;
+    background-color: #FFF;
 }
 
 .window-resizer-x {
-  cursor: ew-resize;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 5px;
-  height: 100%;
+    cursor: ew-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
 }
 
 .window-resizer-y {
-  cursor: ns-resize;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 5px;
+    cursor: ns-resize;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
 }
 
 .window-resizer-xy {

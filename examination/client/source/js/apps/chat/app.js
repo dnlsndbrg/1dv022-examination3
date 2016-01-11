@@ -2,6 +2,10 @@ var PwdApp = require("../../../js/PwdApp");
 var socketConfig = require("./socketConfig.json");
 var Channel = require("./Channel");
 
+/**
+ * Chat constructor
+ * @param {Object} config - app configuration object
+ */
 function Chat(config) {
     PwdApp.call(this, config); //inherit from pwdApp object
     this.channels = {};
@@ -22,6 +26,9 @@ function Chat(config) {
 Chat.prototype = Object.create(PwdApp.prototype);
 Chat.prototype.constructor = Chat;
 
+/**
+ * enter username
+ */
 Chat.prototype.inputName = function() {
     return new Promise(
         function(resolve, reject) {
@@ -37,12 +44,16 @@ Chat.prototype.inputName = function() {
             textInput.focus();
 
             button.addEventListener("click", function() {
-                resolve(textInput.value);
+                if (textInput.value.length > 0) {
+                    resolve(textInput.value);
+                }
             }.bind(this));
 
             textInput.addEventListener("keypress", function(event) {
                 if (event.keyCode === 13) {
-                    resolve(textInput.value);
+                    if (textInput.value.length > 0) {
+                        resolve(textInput.value);
+                    }
                 }
             }.bind(this));
 
@@ -50,6 +61,9 @@ Chat.prototype.inputName = function() {
     );
 };
 
+/**
+ * create chat channel html
+ */
 Chat.prototype.startChat = function() {
     // clear window of previous element (the input username screen)
     document.querySelector("#window-" + this.id + " .window-content").textContent = "";
