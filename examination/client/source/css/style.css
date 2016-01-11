@@ -184,7 +184,16 @@ body {
     display: inline-block;
     text-align: center;
     color: #EDEDED;
-    margin: 20px;
+    margin: 10px;
+    padding: 7px;
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 1px;
+}
+
+.shortcut:focus {
+      background-color: rgba(255, 255, 255, 0.1);
+      outline: none;
+      border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .shortcut i {
@@ -216,6 +225,62 @@ body {
     color: #FFF;
 }
 
+
+
+nav { 
+background-color: #E2E2E2;;
+}
+
+nav ul {
+    padding:0;
+    margin:0;
+    list-style: none;
+    position: relative;
+    }
+    
+nav ul li {
+    display:inline-block;
+    background-color: #E2E2E2;
+}
+
+nav a {
+    display:block;
+    padding:0 10px; 
+    color:#000;
+    line-height: 30px;
+    text-decoration:none;
+}
+
+nav a:hover { 
+    background-color: #243342; 
+    color: #fff;
+}
+
+/* Hide Dropdowns by Default */
+nav ul ul {
+    display: none;
+    position: absolute; 
+    top: 30px; /* the height of the main nav */
+}
+    
+/* Display Dropdowns on Hover */
+nav ul li:hover > ul {
+    display:inherit;
+}
+    
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+    float:none;
+    display:list-item;
+    position: relative;
+}
+
+
+
+
+
+
+
 .hidden {
     display: none;
 }
@@ -223,6 +288,8 @@ body {
 .clear {
   clear: both;
 }
+
+
 
 
 

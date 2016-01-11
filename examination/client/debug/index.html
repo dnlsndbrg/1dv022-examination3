@@ -23,7 +23,7 @@
   </template>
 
   <template id="shortcut">
-    <div class="shortcut">
+    <div class="shortcut" tabindex="1">
       <i class="fa"></i>
       <br />
       <span class="shortcut-name"></span>
@@ -56,12 +56,20 @@
     </template>
 
     <template id="window-menu-container">
-        <ul class="window-menu-container">
-            <a href="#"></a>
-        </ul>
+        <nav><ul class="window-menu-ul"></ul></nav>
     </template>
+    
+    <template id="window-menu-header">
+        <li>
+            <a href="#"></a>
+            <ul class="window-menu-dropdown"></ul>
+        </li>
+    </template>
+
     <template id="window-menu-item">
-        <li class="window-menu-item"></li>
+        <li class="window-menu-item">
+            <a href="#"></a>
+        </li>
     </template>
 
 

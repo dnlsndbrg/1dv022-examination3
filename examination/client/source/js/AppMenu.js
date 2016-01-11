@@ -1,25 +1,35 @@
-var AppMenuItem = require("./AppMenuItem");
-
-function AppMenu(menuElement, menuName, menuItems) {
-    this.menuElement = menuElement;
+function AppMenu(menuElement, menus) {
 
     var template = document.querySelector("#window-menu-container");
     var clone = document.importNode(template.content, true);
     menuElement.appendChild(clone);
-    this.container = menuElement.lastElementChild;
-    this.container.lastElementChild.textContent = menuName;
+    this.element = menuElement.lastElementChild.lastElementChild;
 
-    this.menuItems = [];
+    menus.forEach(function(menu) {
+        // create menu header
+        var template = document.querySelector("#window-menu-header");
+        var clone = document.importNode(template.content, true);
+        this.element.appendChild(clone);
 
-    // populate menu
-    menuItems.forEach(function(item) {
-        // var template = document.querySelector("#window-menu-item");
-        // var clone = document.importNode(template.content, true);
-        // this.container.appendChild(clone);
-        // container.lastElementChild.textContent = item.name;
+        // add header name
+        this.element.lastElementChild.firstElementChild.textContent = menu.name;
 
-        // this.menuItems.push(new AppMenuItem(item));
-    });
+        // add menu items
+        var dropdown = this.element.lastElementChild.lastElementChild;
+        menu.items.forEach(function(item) {
+
+            // create menu item html
+            var template = document.querySelector("#window-menu-item");
+            var clone = document.importNode(template.content, true);
+            dropdown.appendChild(clone);
+
+            // set name and assign eventlistener
+            var itemElement = dropdown.lastElementChild.lastElementChild;
+            itemElement.textContent = item.name;
+            itemElement.addEventListener("click", item.action);
+
+        }.bind(this));
+    }.bind(this));
 }
 
 module.exports = AppMenu;

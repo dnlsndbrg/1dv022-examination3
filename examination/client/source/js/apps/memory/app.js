@@ -9,17 +9,22 @@ var AppMenu = require("../../../js/AppMenu");
 function Memory(config) {
     PwdApp.call(this, config);
     this.board = new Board(this, 4,3);
-    
-    // this.menu = new AppMenu(this.board.menuElement, "File", [
-    //     {
-    //         name: "Settings",
-    //         action: this.board.settings
-    //     },
-    //     {
-    //         name: "New game",
-    //         action: this.board.startGame
-    //     }]
-    // );
+
+    this.menu = new AppMenu(this.board.menuElement, [
+        {
+            name: "File",
+            items: [
+                {
+                    name: "Settings",
+                    action: this.settings.bind(this)
+                },
+                {
+                    name: "New game",
+                    action: this.board.startGame.bind(this.board)
+                }]
+        }
+        ]
+    );
     this.board.startGame();
 }
 
@@ -33,7 +38,7 @@ Memory.prototype.settings = function() {
     console.log("show settings");
 };
 
-/** 
+/**
  * when the app is closing
  */
 Memory.prototype.close = function() {
