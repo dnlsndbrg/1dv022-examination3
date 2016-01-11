@@ -120,6 +120,13 @@ AppWindow.prototype.stopDrag = function() {
 };
 
 /**
+ * Called whenever the app window has been resized
+ */
+AppWindow.prototype.resized = function() {
+    
+};
+
+/**
  * position this window in front of other windows
  */
 AppWindow.prototype.moveToTop = function() {

@@ -31,7 +31,7 @@ ResizeWindowWidth.prototype.drag = function(event) {
 };
 
 ResizeWindowWidth.prototype.stopDrag = function() {
-
+	this.appWindow.resized();
 };
 
 module.exports = ResizeWindowWidth;

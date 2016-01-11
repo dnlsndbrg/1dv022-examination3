@@ -30,7 +30,7 @@ ResizeWindowHeight.prototype.drag = function(event) {
  * resizer drag stopped
 */
 ResizeWindowHeight.prototype.stopDrag = function() {
-
+    this.appWindow.resized();
 };
 
 module.exports = ResizeWindowHeight;
