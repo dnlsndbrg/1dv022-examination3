@@ -247,7 +247,7 @@ nav a {
     display:block;
     padding:0 10px; 
     color:#000;
-    line-height: 30px;
+    line-height: 31px;
     text-decoration:none;
 }
 
@@ -256,19 +256,16 @@ nav a:hover {
     color: #fff;
 }
 
-/* Hide Dropdowns by Default */
 nav ul ul {
     display: none;
     position: absolute; 
-    top: 30px; /* the height of the main nav */
+    top: 31px; /* the height of the main nav */
 }
     
-/* Display Dropdowns on Hover */
 nav ul li:hover > ul {
     display:inherit;
 }
     
-/* Fisrt Tier Dropdown */
 nav ul ul li {
     float:none;
     display:list-item;

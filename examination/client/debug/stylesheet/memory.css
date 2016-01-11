@@ -49,3 +49,11 @@
 	bottom: 0;
 
 }
+
+.memory-setup {
+	height: 100%;
+}
+
+.memory-setup label {
+	margin: 0 auto;
+}

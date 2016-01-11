@@ -8,34 +8,52 @@ var AppMenu = require("../../../js/AppMenu");
  */
 function Memory(config) {
     PwdApp.call(this, config);
-    this.board = new Board(this, 4,3);
 
-    this.menu = new AppMenu(this.board.menuElement, [
+    // add a dropdown menu to the window
+    this.menu = new AppMenu(document.querySelector("#window-" + this.id + " .window-menu"), [
         {
             name: "File",
             items: [
                 {
-                    name: "Settings",
-                    action: this.settings.bind(this)
+                    name: "New game",
+                    action: this.newGame.bind(this)
                 },
                 {
-                    name: "New game",
-                    action: this.board.startGame.bind(this.board)
-                }]
+                    name: "Quit",
+                    action: this.appWindow.close.bind(this.appWindow)
+                }
+            ]
         }
         ]
     );
+
+    this.board = new Board(this, 4,3);
     this.board.startGame();
 }
 
 Memory.prototype = Object.create(PwdApp.prototype);
 Memory.prototype.constructor = Memory;
 
-/**
- * when the settings menu is clicked
- */
-Memory.prototype.settings = function() {
-    console.log("show settings");
+Memory.prototype.newGame = function() {
+    var contentElement = document.querySelector("#window-" + this.id + " .window-content");
+    contentElement.textContent = "";
+
+    // input rows/cols html
+    var template = document.querySelector("#memory-setup");
+    var clone = document.importNode(template.content, true);
+    contentElement.appendChild(clone);
+    
+    var button = document.querySelector("#window-" + this.id + " input[type=button]");
+    var rowsInput = document.querySelector("#window-" + this.id + " .memory-rows-input");
+    var colsInput = document.querySelector("#window-" + this.id + " .memory-cols-input");
+
+    rowsInput.value = this.board.rows;
+    colsInput.value = this.board.columns;
+
+    button.addEventListener("click", function() {
+        this.board = new Board(this, colsInput.value,rowsInput.value);
+        this.board.startGame();
+    }.bind(this));
 };
 
 /**

@@ -20,14 +20,16 @@ function shuffle(board) {
     }
 }
 
-/** 
- * Board 
+/**
+ * Board
  * @param {object} pwd - pwd reference
  * @param {number} columns - how many columns wide the memory game should me
  * @param {number} rows - how many rows
  */
 function Board(pwd, columns, rows) {
     this.pwd = pwd;
+
+    document.querySelector("#window-" + this.pwd.id + " .window-content").textContent = "";
 
     // TODO: verify width/height
     this.rows = rows;
@@ -45,9 +47,6 @@ function Board(pwd, columns, rows) {
     this.wrapperElement.classList.add("memory-wrapper");
 
     document.querySelector("#window-" + this.pwd.id).setAttribute("tabindex", 1);
-
-    // menu
-    this.menuElement = document.querySelector("#window-" + this.pwd.id + " .window-menu");
 
     // Attempts html
     var template = document.querySelector("#memory-attempts");
