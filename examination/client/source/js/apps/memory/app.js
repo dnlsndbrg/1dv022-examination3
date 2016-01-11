@@ -10,7 +10,7 @@ function Memory(config) {
     PwdApp.call(this, config);
 
     // add a dropdown menu to the window
-    this.menu = new AppMenu(document.querySelector("#window-" + this.id + " .window-menu"), [
+    this.menu = new AppMenu(this.appWindow.menuElement, [
         {
             name: "File",
             items: [
@@ -43,7 +43,7 @@ Memory.prototype.newGame = function() {
     var clone = document.importNode(template.content, true);
     contentElement.appendChild(clone);
     
-    var button = document.querySelector("#window-" + this.id + " input[type=button]");
+    var button = document.querySelector("#window-" + this.id + " .btn");
     var rowsInput = document.querySelector("#window-" + this.id + " .memory-rows-input");
     var colsInput = document.querySelector("#window-" + this.id + " .memory-cols-input");
 

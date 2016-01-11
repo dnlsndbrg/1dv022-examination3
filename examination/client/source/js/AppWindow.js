@@ -29,6 +29,9 @@ function AppWindow(config) {
     // define this.wrapperElement
     this.wrapperElement = document.querySelector("#window-" + this.id + " .window-content-wrapper");
 
+    // define menuElement
+    this.menuElement = document.querySelector("#window-" + this.id + " .window-menu");
+
     // set window bar icon
     document.querySelector("#window-" + this.id + " .fa").classList.add(config.icon);
 
@@ -169,6 +172,7 @@ AppWindow.prototype.maximize = function() {
 
     // if it is maximized from a minimized state
     this.wrapperElement.classList.remove("hidden");
+    this.menuElement.classList.remove("hidden");
     document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
     this.minimized = false;
 };
@@ -194,6 +198,7 @@ AppWindow.prototype.restore = function() {
 
     // if it is restored from a minimized state
     this.wrapperElement.classList.remove("hidden");
+    this.menuElement.classList.remove("hidden");
     document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
     this.minimized = false;
 };
@@ -210,6 +215,7 @@ AppWindow.prototype.minimize = function() {
         this.lastY = this.y;
         this.lastWidth = this.width;
         document.querySelector("#window-" + this.id + " .window-resizer-y").classList.add("hidden");
+        this.menuElement.classList.add("hidden");
         this.wrapperElement.classList.add("hidden");
         this.element.style.width = "200px";
         this.minimized = true;
@@ -220,6 +226,7 @@ AppWindow.prototype.minimize = function() {
         this.y = this.lastY;
         this.element.style.width = this.lastWidth + "px";
         this.wrapperElement.classList.remove("hidden");
+        this.menuElement.classList.remove("hidden");
         document.querySelector("#window-" + this.id + " .window-resizer-y").classList.remove("hidden");
     }
 };
