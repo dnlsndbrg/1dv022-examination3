@@ -42,7 +42,7 @@ Memory.prototype.newGame = function() {
     var template = document.querySelector("#memory-setup");
     var clone = document.importNode(template.content, true);
     contentElement.appendChild(clone);
-    
+
     var button = document.querySelector("#window-" + this.id + " .btn");
     var rowsInput = document.querySelector("#window-" + this.id + " .memory-rows-input");
     var colsInput = document.querySelector("#window-" + this.id + " .memory-cols-input");

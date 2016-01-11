@@ -298,12 +298,12 @@ nav ul ul li {
     background: -webkit-linear-gradient(top,  #f6f6f6 0%,#dddddd 100%);
     background: linear-gradient(to bottom,  #f6f6f6 0%,#dddddd 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#dddddd',GradientType=0 );
-    cursor: pointer;
     color: #000;
+    cursor: default;
     padding: 1px 6px;
     border: 1px solid #a6a6a6;
     font-size: 0.9em;
-    border-radius: 2px;
+    border-radius: 1px;
     outline: none;
 }
 
