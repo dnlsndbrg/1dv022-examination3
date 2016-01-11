@@ -20,7 +20,7 @@ function Shortcut(config, pwd) {
     this.element.lastElementChild.textContent = this.title;
 
     //add event listener
-    this.element.addEventListener("click", function() {
+    this.element.addEventListener("dblclick", function() {
         this.pwd.startApp(this.config);
     }.bind(this));
 }
