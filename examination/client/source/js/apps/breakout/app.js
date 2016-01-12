@@ -65,13 +65,6 @@ Breakout.prototype.resized = function() {
         this.game.canvas.style.width = newWidth + "px";
         this.game.canvas.style.height = newHeight + "px";
     }
-
-    //this.game.canvas.style.marginTop = (-newHeight / 2) + "px";
-    //this.game.canvas.style.marginLeft = (-newWidth / 2) + "px";
-
-    //var gameCanvas = document.getElementById('gameCanvas');
-    //gameCanvas.width = newWidth;
-    //gameCanvas.height = newHeight;
 };
 
 /**
@@ -79,6 +72,7 @@ Breakout.prototype.resized = function() {
  */
 Breakout.prototype.close = function() {
     this.game.running = false;
+
     // remove the graphics
     document.querySelector("#pwd").removeChild(this.appWindow.element);
 };

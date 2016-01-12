@@ -48,7 +48,6 @@ Game.prototype.newGame = function() {
 };
 
 Game.prototype.drawScore = function() {
-    console.log(this.score)
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#363636";
     this.ctx.textAlign = "left";
@@ -56,7 +55,6 @@ Game.prototype.drawScore = function() {
 };
 
 Game.prototype.gameOver = function() {
-    console.log("a")
     this.running = false;
     this.ctx.font = "46px Arial";
     this.ctx.textAlign = "center";
@@ -67,7 +65,7 @@ Game.prototype.gameOver = function() {
 Game.prototype.gameWon = function() {
     this.running = false;
     this.ctx.font = "46px Arial";
-     this.ctx.textAlign = "center";
+    this.ctx.textAlign = "center";
     this.ctx.fillStyle = "#7eb364";
     this.ctx.fillText("Win!", this.canvas.width / 2, this.canvas.height / 2);
 };
@@ -91,16 +89,16 @@ Game.prototype.keyUpHandler = function(e) {
 };
 
 Game.prototype.loop = function() {
-        // clear screen
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // clear screen
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // calculate time
-        var currentTime = new Date().getTime();
-        var dt = (currentTime - this.lastTime);
-        this.lastTime = currentTime;
+    // calculate time
+    var currentTime = new Date().getTime();
+    var dt = (currentTime - this.lastTime);
+    this.lastTime = currentTime;
 
-        this.update(dt);
-        this.draw();
+    this.update(dt);
+    this.draw();
 
     // loop
     if (this.running) {
